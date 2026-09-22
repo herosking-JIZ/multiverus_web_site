@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MULTIVERUS — Logo · Aperçu</title>
+<style>
+  :root{
+    --bg:#0A0E14; --surface:#111722; --ink:#E8ECF1; --muted:#8A94A6; --faint:#5B6472;
+    --teal:#2DD4BF; --border:rgba(255,255,255,0.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:Inter, system-ui, -apple-system, sans-serif;
+    min-height:100vh; padding:56px 48px;
+  }
+  .eyebrow{
+    font-family:"JetBrains Mono", monospace; font-size:12px; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--teal); margin-bottom:10px;
+  }
+  h1{font-size:28px; font-weight:800; letter-spacing:-0.02em; margin:0 0 6px;}
+  .sub{color:var(--muted); font-size:14px; margin:0 0 40px;}
+  .grid{display:grid; gap:28px;}
+  .card{
+    background:rgba(255,255,255,0.04); border:1px solid var(--border);
+    border-radius:20px; padding:36px; backdrop-filter:blur(16px);
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .card .label{
+    font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--muted);
+    display:flex; align-items:center; gap:10px;
+  }
+  .card .label::before{content:""; width:8px; height:8px; border-radius:999px; background:var(--teal);}
+  .stage{
+    border-radius:14px; padding:40px 32px;
+    display:flex; align-items:center; justify-content:center;
+    min-height:220px;
+  }
+  .stage.dark{background:#0A0E14; border:1px dashed rgba(255,255,255,0.12);}
+  .stage.light{background:#E8ECF1;}
+  .stage img{max-width:100%; height:auto;}
+  .mark-lg{width:260px;}
+  .horizontal{width:100%; max-width:960px;}
+  .avatar{width:220px;}
+  .mono{width:220px;}
+  .notes{color:var(--faint); font-size:12.5px; line-height:1.6;}
+</style>
+</head>
+<body>
+  <div class="eyebrow">MULTIVERUS · Identité</div>
+  <h1>Logo — propositions</h1>
+  <p class="sub">Mark « M-verse » : un « M » en dégradé signature traversé par deux orbites (le multivers) + un nœud-planète.</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="label">Mark · icône (transparent)</div>
+      <div class="stage dark"><img class="mark-lg" src="multiverus-mark.svg" alt="mark"></div>
+      <div class="notes">Usage : avatar, favicon, watermark. Sur fond sombre uniquement (les éléments sont clairs).</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Lockup horizontal · mark + wordmark</div>
+      <div class="stage dark"><img class="horizontal" src="multiverus-horizontal.svg" alt="horizontal"></div>
+      <div class="notes">« MULTI » en encre claire + « VERUS » en dégradé. Tagline « TECH · FINTECH · AFRIQUE » en mono. Wordmark vectorisé (tracés, aucune dépendance de police).</div>
+    </div>
+
+    <div class="card" style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+      <div>
+        <div class="label">Avatar (tuile sombre)</div>
+        <div class="stage" style="background:#E8ECF1; min-height:180px;"><img class="avatar" src="multiverus-avatar.svg" alt="avatar"></div>
+        <div class="notes">Pour profils / OG-image / fonds clairs.</div>
+      </div>
+      <div>
+        <div class="label">Monochrome (teal)</div>
+        <div class="stage dark" style="min-height:180px;"><img class="mono" src="multiverus-monochrome.svg" alt="monochrome"></div>
+        <div class="notes">Version 1 couleur — filigrane, gravure, surimpression.</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

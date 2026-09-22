@@ -1,0 +1,10 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+/generated/prisma
+API_DOCUMENTATION.md
+
+# Uploads — garder le dossier, ignorer les fichiers
+uploads/*
+!uploads/.gitkeep

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="MULTIVERUS — avatar">
+  <defs>
+    <linearGradient id="mvGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2DD4BF"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <radialGradient id="mvGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.16"/>
+      <stop offset="0.6" stop-color="#2DD4BF" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mvNodeGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mvTile" cx="0.5" cy="0.35" r="0.9">
+      <stop offset="0" stop-color="#131C29"/>
+      <stop offset="1" stop-color="#0A0E14"/>
+    </radialGradient>
+  </defs>
+
+  <!-- tuile sombre arrondie -->
+  <rect x="8" y="8" width="496" height="496" rx="112" fill="url(#mvTile)"/>
+  <rect x="8.5" y="8.5" width="495" height="495" rx="111.5" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- mark centré -->
+  <g transform="translate(51,35) scale(0.8)">
+    <ellipse cx="256" cy="276" rx="200" ry="150" fill="url(#mvGlow)"/>
+    <ellipse cx="256" cy="276" rx="230" ry="90" fill="none" stroke="#2DD4BF" stroke-opacity="0.32" stroke-width="2.5" transform="rotate(-22 256 276)"/>
+    <ellipse cx="256" cy="276" rx="218" ry="78" fill="none" stroke="#2DD4BF" stroke-opacity="0.16" stroke-width="2" transform="rotate(18 256 276)"/>
+    <path d="M128 380 L128 172 L256 300 L384 172 L384 380" fill="none" stroke="url(#mvGrad)" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="401" cy="154" r="30" fill="url(#mvNodeGlow)"/>
+    <circle cx="401" cy="154" r="11" fill="#2DD4BF"/>
+    <circle cx="82" cy="272" r="5" fill="#2DD4BF" opacity="0.7"/>
+    <circle cx="86" cy="112" r="2.6" fill="#E8ECF1" opacity="0.5"/>
+    <circle cx="150" cy="422" r="2.2" fill="#2DD4BF" opacity="0.5"/>
+    <circle cx="452" cy="384" r="2.4" fill="#E8ECF1" opacity="0.4"/>
+    <circle cx="58" cy="316" r="1.8" fill="#E8ECF1" opacity="0.35"/>
+  </g>
+</svg>

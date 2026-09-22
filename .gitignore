@@ -1,0 +1,58 @@
+# --- Dépendances / paquets ---
+node_modules/
+**/node_modules/
+
+# --- Builds / artefacts ---
+dist/
+dist-ssr/
+.next/
+out/
+build/
+coverage/
+.cache/
+.vite/
+*.tsbuildinfo
+
+# --- Fichiers d'environnement / secrets locaux ---
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# --- Logs / debugging ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Éditeur / OS ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Fichiers locaux / générés ---
+*.sqlite
+*.sqlite3
+*.db
+*.pem
+*.key
+
+# --- Médias uploads / fichiers générés ---
+backend/uploads/*
+!backend/uploads/.gitkeep
+frontend/**/uploads/*
+!frontend/**/uploads/.gitkeep
+
+# --- Clé de contexte Claude / config locale ---
+.claude/
+**/.claude/
+
+# --- Données générées par Prisma / outils ---
+/generated/
+**/generated/

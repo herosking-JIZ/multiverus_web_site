@@ -1,0 +1,361 @@
+// ============================================================
+// BROADWAY TECHNOLOGIES — Prisma Schema
+// Plateforme Web Évolutive — Phase 1
+// Production-ready — Stockage local VPS (multer/diskStorage)
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum Role {
+  ADMIN
+}
+
+enum StatutLead {
+  NOUVEAU
+  EN_COURS
+  TRAITE
+  ARCHIVE
+}
+
+enum StatutProduit {
+  NOUVEAU
+  ACTIF
+  ARCHIVE
+}
+
+enum TypeEvenement {
+  PAGEVIEW
+  CLICK
+  DOWNLOAD
+  FORM_SUBMIT
+}
+
+enum UploadStatus {
+  PENDING
+  UPLOADED
+  FAILED
+
+  @@map("upload_status")
+}
+
+enum Visibilite {
+  PUBLIC
+  PRIVE
+
+  @@map("visibilite")
+}
+
+enum TypeVariante {
+  THUMBNAIL
+  WEBP
+  HD
+  SD
+
+  @@map("type_variante")
+}
+
+// ============================================================
+// UTILISATEUR (ADMIN)
+// ============================================================
+
+model Utilisateur {
+  id                   String    @id @default(uuid()) @db.Uuid
+  nomComplet           String    @map("nom_complet") @db.VarChar(200)
+  email                String    @unique @db.VarChar(200)
+  motDePasse           String    @map("mot_de_passe") @db.VarChar(255)
+  role                 Role      @default(ADMIN)
+  actif                Boolean   @default(true)
+  tentativesEchec      Int       @default(0) @map("tentatives_echec")
+  bloqueJusqua         DateTime? @map("bloque_jusqua")
+  refreshToken         String?   @map("refresh_token") @db.Text
+  resetPasswordToken   String?   @map("reset_password_token") @db.Text
+  resetPasswordExpires DateTime? @map("reset_password_expires")
+  lastLogin            DateTime? @map("last_login")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  services     Service[]
+  produits     Produit[]
+  projets      Projet[]
+  leadsTraites Lead[]
+  partenaires  Partenaire[]
+  medias       Media[]
+  auditLogs    AuditLog[]
+
+  @@map("utilisateurs")
+}
+
+// ============================================================
+// AUDIT LOG
+// ============================================================
+
+model AuditLog {
+  id            BigInt   @id @default(autoincrement())
+  utilisateurId String   @map("utilisateur_id") @db.Uuid
+  action        String   @db.VarChar(100)
+  entiteCible   String   @map("entite_cible") @db.VarChar(100)
+  entiteId      String?  @map("entite_id") @db.VarChar(100)
+  detail        Json?
+  timestamp     DateTime @default(now())
+
+  utilisateur Utilisateur @relation(fields: [utilisateurId], references: [id])
+
+  @@index([utilisateurId])
+  @@index([entiteCible, entiteId])
+  @@map("audit_logs")
+}
+
+// ============================================================
+// MEDIA — Production-ready S3 + CloudFront
+// ============================================================
+
+model Media {
+  id         String  @id @default(uuid()) @db.Uuid
+  uploadePar String? @map("uploade_par") @db.Uuid
+
+  // Fichier
+  nomFichier   String @map("nom_fichier") @db.VarChar(300)
+  typeMime     String @map("type_mime") @db.VarChar(100)
+  tailleOctets BigInt @map("taille_octets")
+
+  // S3
+  s3Key    String @unique @map("s3_key") @db.VarChar(500)
+  s3Bucket String @map("s3_bucket") @db.VarChar(200)
+  s3Region String @map("s3_region") @db.VarChar(50)
+  url      String? @db.VarChar(500) // URL S3 brute
+
+  // CloudFront
+  cdnUrl String? @map("cdn_url") @db.VarChar(500) // URL CloudFront (null tant que PENDING)
+
+  // Statut upload
+  uploadStatus    UploadStatus @default(PENDING) @map("upload_status")
+  uploadExpiresAt DateTime?    @map("upload_expires_at") // expiration presigned PUT
+
+  // Accès
+  visibilite Visibilite @default(PUBLIC)
+
+  // Métadonnées
+  altText String? @map("alt_text") @db.VarChar(300)
+  dossier String? @db.VarChar(200)
+
+  // Images
+  largeur Int?
+  hauteur Int?
+
+  // Vidéos
+  dureeSecondes Int? @map("duree_secondes")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  uploadeur  Utilisateur?   @relation(fields: [uploadePar], references: [id], onDelete: SetNull)
+  variantes  MediaVariante[]
+
+  // Utilisé par (SetNull = ne jamais supprimer en cascade)
+  services    Service[]
+  produits    Produit[]
+  projets     Projet[]
+  partenaires Partenaire[]
+
+  @@index([typeMime])
+  @@index([dossier])
+  @@index([s3Key])
+  @@index([uploadStatus])  // requêtes de nettoyage PENDING orphelins
+  @@index([s3Bucket])      // multi-bucket
+  @@index([visibilite])    // filtrage public/privé
+  @@map("medias")
+}
+
+// ============================================================
+// MEDIA VARIANTE — Versions dérivées (thumbnail, webp, HD, SD)
+// ============================================================
+
+model MediaVariante {
+  id      String @id @default(uuid()) @db.Uuid
+  mediaId String @map("media_id") @db.Uuid
+
+  // Type de variante
+  type TypeVariante
+
+  // S3 + CloudFront
+  s3Key  String  @map("s3_key") @db.VarChar(500)
+  cdnUrl String? @map("cdn_url") @db.VarChar(500)
+
+  // Dimensions
+  largeur      Int?
+  hauteur      Int?
+  tailleOctets BigInt @map("taille_octets")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  // Relations
+  media Media @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@unique([mediaId, type]) // une seule variante par type par média
+  @@index([mediaId])
+  @@index([type])
+  @@map("media_variantes")
+}
+
+// ============================================================
+// SERVICE
+// ============================================================
+
+model Service {
+  id         String  @id @default(uuid()) @db.Uuid
+  modifiePar String? @map("modifie_par") @db.Uuid
+  imageId    String? @map("image_id") @db.Uuid
+
+  titre       String   @db.VarChar(200)
+  slug        String   @unique @db.VarChar(200)
+  description String   @db.Text
+  icone       String?  @db.VarChar(100)
+  ordre       Int      @default(0)
+  actif       Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  editeur Utilisateur? @relation(fields: [modifiePar], references: [id], onDelete: SetNull)
+  image   Media?       @relation(fields: [imageId], references: [id], onDelete: SetNull)
+
+  @@index([slug])
+  @@index([actif])
+  @@map("services")
+}
+
+// ============================================================
+// PRODUIT
+// ============================================================
+
+model Produit {
+  id         String  @id @default(uuid()) @db.Uuid
+  modifiePar String? @map("modifie_par") @db.Uuid
+  imageId    String? @map("image_id") @db.Uuid
+
+  nom         String        @db.VarChar(200)
+  slug        String        @unique @db.VarChar(200)
+  description String        @db.Text
+  categorie   String        @db.VarChar(100)
+  statut      StatutProduit @default(ACTIF)
+  features    Json?
+  actif       Boolean       @default(true)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  editeur Utilisateur? @relation(fields: [modifiePar], references: [id], onDelete: SetNull)
+  image   Media?       @relation(fields: [imageId], references: [id], onDelete: SetNull)
+
+  @@index([slug])
+  @@index([categorie])
+  @@index([statut])
+  @@map("produits")
+}
+
+// ============================================================
+// PROJET
+// ============================================================
+
+model Projet {
+  id         String  @id @default(uuid()) @db.Uuid
+  modifiePar String? @map("modifie_par") @db.Uuid
+  logoId     String? @map("logo_id") @db.Uuid
+
+  titre           String    @db.VarChar(300)
+  client          String    @db.VarChar(200)
+  secteur         String    @db.VarChar(150)
+  description     String    @db.Text
+  technologies    Json?
+  dateRealisation DateTime? @map("date_realisation") @db.Date
+  publie          Boolean   @default(true)
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  editeur Utilisateur? @relation(fields: [modifiePar], references: [id], onDelete: SetNull)
+  logo    Media?       @relation(fields: [logoId], references: [id], onDelete: SetNull)
+
+  @@index([secteur])
+  @@index([publie])
+  @@map("projets")
+}
+
+// ============================================================
+// PARTENAIRE
+// ============================================================
+
+model Partenaire {
+  id         String  @id @default(uuid()) @db.Uuid
+  modifiePar String? @map("modifie_par") @db.Uuid
+  logoId     String? @map("logo_id") @db.Uuid
+
+  nom       String   @db.VarChar(200)
+  siteWeb   String?  @map("site_web") @db.VarChar(300)
+  ordre     Int      @default(0)
+  actif     Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  editeur Utilisateur? @relation(fields: [modifiePar], references: [id], onDelete: SetNull)
+  logo    Media?       @relation(fields: [logoId], references: [id], onDelete: SetNull)
+
+  @@index([actif])
+  @@map("partenaires")
+}
+
+// ============================================================
+// LEAD
+// ============================================================
+
+model Lead {
+  id            String     @id @default(uuid()) @db.Uuid
+  traitePar     String?    @map("traite_par") @db.Uuid
+  nomComplet    String     @map("nom_complet") @db.VarChar(200)
+  email         String     @db.VarChar(200)
+  organisation  String?    @db.VarChar(200)
+  sujet         String     @db.VarChar(200)
+  message       String     @db.Text
+  statut        StatutLead @default(NOUVEAU)
+  notesInternes String?    @map("notes_internes") @db.Text
+  ipAdresse     String?    @map("ip_adresse") @db.VarChar(50)
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+
+  responsable Utilisateur? @relation(fields: [traitePar], references: [id], onDelete: SetNull)
+
+  @@index([statut])
+  @@index([createdAt])
+  @@map("leads")
+}
+
+// ============================================================
+// EVENEMENT ANALYTICS
+// ============================================================
+
+model EvenementAnalytics {
+  id            BigInt        @id @default(autoincrement())
+  sessionId     String        @map("session_id") @db.Uuid
+  pagePath      String        @map("page_path") @db.VarChar(500)
+  evenement     TypeEvenement
+  userAgent     String?       @map("user_agent") @db.Text
+  pays          String?       @db.VarChar(100)
+  dureeSecondes Int?          @map("duree_secondes")
+  referrer      String?       @db.VarChar(500)
+  timestamp     DateTime      @default(now())
+
+  @@index([sessionId])
+  @@index([pagePath])
+  @@index([evenement])
+  @@index([timestamp])
+  @@map("evenements_analytics")
+}

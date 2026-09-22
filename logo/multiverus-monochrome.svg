@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="MULTIVERUS — logo monochrome">
+  <defs>
+    <radialGradient id="mvGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.16"/>
+      <stop offset="0.6" stop-color="#2DD4BF" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="256" cy="276" rx="200" ry="150" fill="url(#mvGlow)"/>
+  <ellipse cx="256" cy="276" rx="230" ry="90" fill="none" stroke="#2DD4BF" stroke-opacity="0.32" stroke-width="2.5" transform="rotate(-22 256 276)"/>
+  <ellipse cx="256" cy="276" rx="218" ry="78" fill="none" stroke="#2DD4BF" stroke-opacity="0.16" stroke-width="2" transform="rotate(18 256 276)"/>
+
+  <path d="M128 380 L128 172 L256 300 L384 172 L384 380" fill="none" stroke="#2DD4BF" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="401" cy="154" r="11" fill="#2DD4BF"/>
+  <circle cx="82" cy="272" r="5" fill="#2DD4BF" opacity="0.7"/>
+
+  <circle cx="86" cy="112" r="2.6" fill="#2DD4BF" opacity="0.5"/>
+  <circle cx="150" cy="422" r="2.2" fill="#2DD4BF" opacity="0.5"/>
+  <circle cx="452" cy="384" r="2.4" fill="#2DD4BF" opacity="0.4"/>
+  <circle cx="58" cy="316" r="1.8" fill="#2DD4BF" opacity="0.35"/>
+</svg>
