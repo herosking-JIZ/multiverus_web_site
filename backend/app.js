@@ -43,10 +43,9 @@ app.use('/uploads', express.static(uploadsDir));
 
 // Configuration CORS (Toutes origines autorisées actuellement)
 const allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://10.3.3.12:3000',
-    'http://10.3.3.12:5173',
+    'http://100.119.90.39:3000',
+    'http://100.119.90.39:5173',
+    'http://100.119.90.39',
     process.env.FRONTEND_URL,
 ].filter(Boolean);
 

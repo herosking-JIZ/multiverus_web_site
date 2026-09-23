@@ -10,7 +10,7 @@ export interface LoginResponse {
     accessToken: string
     user: {
       id: string
-      nom: string
+      nomComplet: string
       email: string
       role: 'ADMIN' | 'EDITOR'
     }
