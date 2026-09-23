@@ -4,7 +4,7 @@ import { appendFileSync } from 'fs'
 async function proxyRequest(request: NextRequest, { params }: { params: { path: string[] } }) {
   const { path } = await params
   const searchParams = request.nextUrl.searchParams.toString()
-  const apiUrl = `http://10.3.3.50:8080/api/v1/${path.join('/')}${searchParams ? `?${searchParams}` : ''}`
+  const apiUrl = `http://100.119.90.39:3000/api/v1/${path.join('/')}${searchParams ? `?${searchParams}` : ''}`
 
   const logMsg = `[${new Date().toISOString()}] ${request.method} ${request.nextUrl.pathname} -> ${apiUrl}\n`
   try {
@@ -12,7 +12,7 @@ async function proxyRequest(request: NextRequest, { params }: { params: { path: 
   } catch (e) { }
 
   const headers = new Headers(request.headers)
-  headers.set('host', '10.3.3.50:8080')
+  headers.set('host', '100.119.90.39:3000')
 
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), 15000) // 15s timeout

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { store } from '../store'
 import { setCsrfToken, setAccessToken, logout } from '../store/authSlice'
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://10.3.3.200:8080/api/v1';
+const baseURL = import.meta.env.VITE_API_URL || 'http://100.119.90.39:3000/api/v1';
 
 const adminApi = axios.create({
   baseURL,

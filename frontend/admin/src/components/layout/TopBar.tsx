@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import type { RootState } from '@/store'
 import { logout } from '@/store/authSlice'
+import { logout as logoutRequest } from '@/services/auth.service'
 
 const PAGE_LABELS: Record<string, string> = {
   '/': 'Dashboard',
@@ -20,9 +21,13 @@ export default function TopBar({ onProfileClick }: { onProfileClick: () => void 
   const location = useLocation()
   const pageLabel = PAGE_LABELS[location.pathname] ?? 'Dashboard'
 
-  const handleLogout = () => {
-    dispatch(logout())
-    navigate('/login')
+  const handleLogout = async () => {
+    try {
+      await logoutRequest()
+    } finally {
+      dispatch(logout())
+      navigate('/login')
+    }
   }
 
   return (

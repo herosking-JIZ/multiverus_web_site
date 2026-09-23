@@ -12,12 +12,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://10.3.3.200:8080',
+        target: 'http://100.119.90.39:3000',
         changeOrigin: true,
         secure: false,
       },
       '/uploads': {
-        target: 'http://10.3.3.200:8080',
+        target: 'http://100.119.90.39:3000',
         changeOrigin: true,
         secure: false,
       }

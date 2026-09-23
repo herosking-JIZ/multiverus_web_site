@@ -12,7 +12,13 @@ import type { LoginPayload } from '@/types/auth.types'
 
 const schema = z.object({
   email:    z.string().email('Email invalide'),
-  password: z.string().min(6, 'Mot de passe requis'),
+  password: z
+    .string()
+    .min(8, 'Le mot de passe doit comporter au moins 8 caractères')
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/,
+      'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial'
+    ),
 })
 
 type FormData = z.infer<typeof schema>
@@ -35,7 +41,7 @@ export default function LoginPage() {
     onSuccess: (response) => {
       if (response.success && response.data) {
         dispatch(setCredentials({
-          user: response.data.user as any,
+          user: response.data.user,
           accessToken: response.data.accessToken
         }))
         navigate('/', { replace: true })
