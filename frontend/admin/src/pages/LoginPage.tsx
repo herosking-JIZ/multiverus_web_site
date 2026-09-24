@@ -108,7 +108,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="mt-4 w-full bg-teal hover:bg-teal/85 active:scale-[0.98] disabled:opacity-60 text-navy py-3 rounded-lg font-bold text-[13px] tracking-wide transition-colors duration-200 shadow-[0_12px_28px_-12px_rgba(45,212,191,0.65)] relative overflow-hidden group/btn"
+              className="mt-4 w-full bg-sky/20 hover:bg-sky hover:bg-teal/85 active:scale-[0.98] disabled:opacity-60 text-navy py-3 rounded-lg font-bold text-[13px] tracking-wide transition-colors duration-200 relative overflow-hidden group/btn"
             >
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
               <span className="relative z-10 uppercase tracking-widest">{mutation.isPending ? 'Authentification…' : 'Accéder au dashboard'}</span>

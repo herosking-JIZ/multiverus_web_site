@@ -57,14 +57,14 @@ export default function TopBar({ onProfileClick }: { onProfileClick: () => void 
 
           <button
             onClick={onProfileClick}
-            className="w-10 h-10 rounded-lg bg-teal shadow-[0_8px_16px_rgba(45,212,191,0.2)] flex items-center justify-center text-navy transition-transform duration-200 hover:scale-105 active:scale-95"
+            className="w-10 h-10 rounded-lg bg-teal shadow-[0_8px_16px_rgba(45,212,191,0.2)] flex items-center justify-center text-navy bg-vivid transition-transform duration-200 hover:scale-105 active:scale-95"
           >
             <User size={20} />
           </button>
 
           <button
             onClick={handleLogout}
-            className="w-10 h-10 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center text-muted hover:text-red-400 hover:bg-red-500/10 hover:shadow-lg transition-all duration-200"
+            className="w-10 h-10 rounded-lg border flex items-center justify-center text-muted text-red-400 bg-red-500/10 hover:bg-red-500/15 hover:shadow-lg transition-all duration-200"
             aria-label="Se déconnecter"
           >
             <LogOut size={18} />
