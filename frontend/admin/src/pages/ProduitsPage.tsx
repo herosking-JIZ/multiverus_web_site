@@ -123,7 +123,7 @@ export default function ProduitsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex flex-col gap-1">
           <h2 className="text-[24px] font-black text-navy font-condensed tracking-tight">Catalogue Produits</h2>
-          <p className="text-[13px] text-navy/40">Gérez les solutions et produits Broadway présentés sur le site.</p>
+          <p className="text-[13px] text-navy/40">Gérez les solutions et produits MULTIVERUS présentés sur le site.</p>
         </div>
         <button onClick={openCreate} className="flex items-center gap-2 bg-navy hover:bg-vivid text-white text-[13px] font-black px-6 py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-vivid/20 active:scale-[0.98]">
           <Plus size={18} />
@@ -209,7 +209,7 @@ export default function ProduitsPage() {
         error={formError}
         submitLabel={editing ? 'Mettre à jour' : 'Créer le produit'}
       >
-        <FormField label="Nom du produit" placeholder="Ex : Broadway CRM" value={form.nom} onChange={(e) => setForm({ ...form, nom: (e.target as HTMLInputElement).value })} required />
+        <FormField label="Nom du produit" placeholder="Ex : MULTIVERUS CRM" value={form.nom} onChange={(e) => setForm({ ...form, nom: (e.target as HTMLInputElement).value })} required />
         <FormField label="Description" as="textarea" placeholder="Décrivez le produit…" value={form.description} onChange={(e) => setForm({ ...form, description: (e.target as HTMLTextAreaElement).value })} required />
         <div className="grid grid-cols-2 gap-4">
           <FormField label="Catégorie" placeholder="Ex : Logiciel" value={form.categorie} onChange={(e) => setForm({ ...form, categorie: (e.target as HTMLInputElement).value })} required />

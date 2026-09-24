@@ -6,18 +6,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Broadway Brand */
-        navy:  '#030816',
-        blue:  '#0047AB',
-        vivid: '#1557E8',
-        sky:   '#00A3FF',
-        celeste: '#F0F9FF',
-        or:    '#F59E0B',
+        /* MULTIVERUS Brand */
+        navy:  '#0A0E14',
+        blue:  '#8B5CF6',
+        vivid: '#2DD4BF',
+        sky:   '#2DD4BF',
+        celeste: '#0D1A1F',
+        or:    '#FBBF24',
         or2:   '#FBBF24',
-        'bg-light': '#F8FAFC',
-        bdr:   '#E2E8F0',
-        muted: '#475569',
-        dim:   '#94A3B8',
+        'bg-light': '#111722',
+        surface: '#111722',
+        line: '#1F2633',
+        bdr:   '#1F2633',
+        muted: '#8A94A6',
+        dim:   '#5B6472',
         /* shadcn/ui */
         border:      'hsl(var(--border))',
         input:       'hsl(var(--input))',
@@ -50,9 +52,9 @@ export default {
         },
       },
       fontFamily: {
-        roboto:    ['Roboto', 'sans-serif'],
-        condensed: ['Roboto Condensed', 'sans-serif'],
-        caveat:    ['Caveat', 'cursive'],
+        roboto:    ['Inter', 'sans-serif'],
+        condensed: ['Inter', 'sans-serif'],
+        caveat:    ['JetBrains Mono', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -30,15 +30,11 @@ export default function AdminLayout() {
 
   return (
     <div className="flex h-screen mesh-gradient overflow-hidden font-roboto relative">
-      {/* Dynamic Background Accents */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-vivid/15 rounded-full blur-[140px] pointer-events-none animate-pulse-ring" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-sky/10 rounded-full blur-[120px] pointer-events-none animate-pulse-ring2" />
-      <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] bg-or/10 rounded-full blur-[100px] pointer-events-none" />
 
       <Sidebar />
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden relative">
         <TopBar onProfileClick={() => setProfileOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-8 relative scroll-smooth custom-scrollbar">
+        <main className="flex-1 overflow-y-auto p-6 lg:p-8 relative scroll-smooth custom-scrollbar">
           <Outlet />
         </main>
       </div>

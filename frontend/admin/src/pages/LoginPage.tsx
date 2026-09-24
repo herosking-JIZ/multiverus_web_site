@@ -45,19 +45,14 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen mesh-gradient flex items-center justify-center px-4 relative overflow-hidden font-roboto">
-      {/* Dynamic Background Elements - Extra WOW factor */}
-      <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-vivid/10 rounded-full blur-[140px] animate-pulse-ring" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[800px] h-[800px] bg-or/10 rounded-full blur-[140px] animate-pulse-ring2" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-sky/5 rounded-full blur-[160px] opacity-30" />
-
       <div className="w-full max-w-[440px] relative z-10">
         <div className="text-center mb-10">
           <div className="inline-flex flex-col items-center gap-0 group">
-            <div className="bg-[#f8f9fa]/90 backdrop-blur-md p-6 px-10 rounded-[32px] border border-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.1)] mb-3 transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_40px_80px_-30px_rgba(21,87,232,0.2)]">
-              <img src="/logo.svg" alt="Broadway Technologies" className="h-12 w-auto min-w-[180px]" />
+            <div className="p-5 px-7 rounded-2xl border border-white/10 bg-[#0A0E14] mb-3 transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_40px_80px_-30px_rgba(45,212,191,0.2)]">
+              <img src="/multiverus-horizontal.svg" alt="MULTIVERUS" className="w-[250px] max-w-full" />
             </div>
             <div className="text-[10px] text-sky font-black uppercase tracking-[0.6em] mt-2 font-condensed opacity-60">
-              Administration
+              Studio admin
             </div>
           </div>
         </div>
@@ -70,7 +65,7 @@ export default function LoginPage() {
             <h1 className="font-black text-[28px] tracking-tight font-condensed mb-2 text-navy">
               Connexion
             </h1>
-            <p className="text-[13px] text-navy/50 font-medium">Veuillez entrer vos informations pour accéder au dashboard.</p>
+              <p className="text-[13px] text-navy/50 font-medium">Accédez à l’espace de pilotage du portail.</p>
           </div>
 
           <form onSubmit={handleSubmit((d) => mutation.mutate(d))} className="flex flex-col gap-5">
@@ -79,7 +74,7 @@ export default function LoginPage() {
               <input 
                 {...register('email')} 
                 type="email" 
-                placeholder="admin@broadway.com" 
+                placeholder="admin@multiverus.dev"
                 className="w-full px-5 py-4 rounded-2xl border border-navy/5 bg-navy/[0.02] text-navy text-[14px] transition-all duration-200 focus:outline-none focus:border-vivid focus:bg-white focus:shadow-[0_0_0_4px_rgba(21,87,232,0.1)] placeholder:text-navy/20" 
               />
               {errors.email && <span className="text-[11px] text-red-500 ml-1 font-medium italic">{errors.email.message}</span>}
@@ -108,13 +103,13 @@ export default function LoginPage() {
               className="mt-4 w-full bg-navy hover:bg-vivid active:scale-[0.98] disabled:opacity-60 text-white py-5 rounded-2xl font-black text-[14px] tracking-tight transition-all duration-500 shadow-[0_16px_32px_-8px_rgba(3,8,22,0.3)] hover:shadow-[0_20px_40px_-10px_rgba(21,87,232,0.4)] relative overflow-hidden group/btn font-condensed"
             >
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
-              <span className="relative z-10 uppercase tracking-widest">{mutation.isPending ? 'Authentification…' : 'Accéder au Dashboard →'}</span>
+              <span className="relative z-10 uppercase tracking-widest">{mutation.isPending ? 'Authentification…' : 'Accéder au dashboard'}</span>
             </button>
           </form>
         </div>
 
         <p className="text-center text-[12px] text-navy/20 mt-10 font-medium">
-          &copy; 2026 Broadway Technologies. Tous droits réservés.
+          &copy; 2026 MULTIVERUS. Tous droits réservés.
         </p>
       </div>
     </div>

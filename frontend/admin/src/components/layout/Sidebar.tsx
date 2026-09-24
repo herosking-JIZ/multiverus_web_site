@@ -28,24 +28,22 @@ export default function Sidebar() {
   return (
     <aside
       className={cn(
-        'sidebar-premium m-4 mr-0 rounded-[32px] flex flex-col transition-all duration-300 relative z-20 overflow-hidden',
-        sidebarCollapsed ? 'w-[80px]' : 'w-[280px]'
+        'sidebar-premium m-3 mr-0 rounded-2xl flex flex-col transition-all duration-300 relative z-20 overflow-hidden',
+        sidebarCollapsed ? 'w-[76px]' : 'w-[264px]'
       )}
     >
       {/* Logo Area */}
-      <div className="h-28 flex items-center justify-center px-6 mb-4 relative">
+      <div className="h-32 flex items-center justify-center px-5 mb-4 relative">
         {!sidebarCollapsed ? (
           <div className="flex flex-col items-center relative z-10 w-full px-2">
-            <div className="bg-[#f8f9fa] backdrop-blur-md p-3.5 px-6 rounded-2xl border border-white shadow-sm mb-2 w-full flex items-center justify-center group/logo overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-vivid/5 to-transparent opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500" />
-              <img src="/logo.svg" alt="Broadway" className="h-8 w-auto min-w-[120px] relative z-10" />
+            <div className="p-3 rounded-xl border border-white/10 bg-[#0A0E14] mb-3 w-full flex items-center justify-center group/logo overflow-hidden relative">
+              <img src="/multiverus-horizontal.svg" alt="MULTIVERUS" className="relative z-10 w-full max-w-[190px]" />
             </div>
-            <span className="text-[10px] text-vivid font-black uppercase tracking-[0.4em] font-condensed">Administration</span>
+            <span className="text-[10px] text-vivid font-black uppercase tracking-[0.4em] font-condensed">Studio admin</span>
           </div>
         ) : (
-          <div className="w-14 h-14 rounded-2xl bg-[#f8f9fa] border border-white flex items-center justify-center transition-all duration-300 hover:bg-white group relative z-10 shadow-sm overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-tr from-vivid/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <img src="/logo.svg" alt="BW" className="h-6 w-auto object-contain px-1 relative z-10" />
+          <div className="w-12 h-12 rounded-xl bg-[#0A0E14] border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-white/10 group relative z-10 overflow-hidden">
+            <img src="/multiverus-mark.svg" alt="MULTIVERUS" className="w-9 h-9 relative z-10" />
           </div>
         )}
         <div className="absolute bottom-0 left-6 right-6 h-px bg-white/10" />
@@ -60,10 +58,10 @@ export default function Sidebar() {
             end={end}
             className={({ isActive }) =>
               cn(
-                'group relative flex items-center gap-4 px-4 py-2 rounded-2xl transition-all duration-500 glass-reflection no-underline',
+                'group relative flex items-center gap-4 px-3.5 py-3 rounded-xl transition-all duration-300 no-underline',
                 isActive
-                  ? 'bg-gradient-to-r from-vivid to-blue text-white shadow-[0_12px_24px_-8px_rgba(21,87,232,0.4)] scale-[1.02]'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                  ? 'bg-vivid text-navy shadow-[0_10px_24px_-10px_rgba(45,212,191,0.7)]'
+                  : 'text-white/55 hover:text-white hover:bg-white/[0.06]'
               )
             }
           >
@@ -81,7 +79,6 @@ export default function Sidebar() {
             )}
 
             {/* Active Indicator Glow */}
-            <div className="absolute inset-y-2 right-2 w-1 rounded-full bg-white opacity-0 transition-opacity group-[.active]:opacity-40" />
           </NavLink>
         ))}
       </nav>
@@ -96,9 +93,9 @@ export default function Sidebar() {
 
       {/* Support Island */}
       {!sidebarCollapsed && (
-        <div className="p-4 mx-4 mb-2 rounded-2xl bg-white/5 border border-white/5 group transition-all duration-500 hover:bg-white/10">
+        <div className="p-4 mx-4 mb-2 rounded-2xl bg-white/[0.04] border border-white/5 group transition-all duration-500 hover:bg-white/10">
           <div className="text-[9px] text-white/20 uppercase tracking-[0.3em] mb-1 font-bold">Support 24/7</div>
-          <div className="text-[11px] text-sky font-bold">info@Broadwaytechgroup.com</div>
+          <div className="text-[11px] text-sky font-bold">hello@multiverus.dev</div>
         </div>
       )}
 

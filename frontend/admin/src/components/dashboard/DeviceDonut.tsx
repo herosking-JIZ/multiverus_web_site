@@ -9,10 +9,10 @@ export default function DeviceDonut({ data }: DeviceDonutProps) {
   const total = data ? data.desktop + data.mobile + data.tablette + data.unknown : 0
 
   const chartData = data ? [
-    { name: 'Desktop',  value: data.desktop,  color: '#1557E8' },
-    { name: 'Mobile',   value: data.mobile,   color: '#F59E0B' },
-    { name: 'Tablette', value: data.tablette,  color: '#475569' },
-    { name: 'Autre',    value: data.unknown,   color: '#94A3B8' },
+    { name: 'Desktop',  value: data.desktop,  color: '#2DD4BF' },
+    { name: 'Mobile',   value: data.mobile,   color: '#8B5CF6' },
+    { name: 'Tablette', value: data.tablette,  color: '#FBBF24' },
+    { name: 'Autre',    value: data.unknown,   color: '#5B6472' },
   ].filter((d) => d.value > 0) : []
 
   if (chartData.length === 0) {
@@ -42,11 +42,11 @@ export default function DeviceDonut({ data }: DeviceDonutProps) {
             ))}
           </Pie>
           <Tooltip
-            formatter={(v: number) => [`${total > 0 ? Math.round((v / total) * 100) : 0}%`, 'Part']}
+            formatter={(v) => [`${total > 0 ? Math.round((Number(v ?? 0) / total) * 100) : 0}%`, 'Part']}
             contentStyle={{
               borderRadius: '16px', border: 'none',
               fontSize: '12px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-              background: 'rgba(255, 255, 255, 0.9)',
+              background: '#111722', color: '#E8ECF1',
               backdropFilter: 'blur(10px)'
             }}
           />

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Roboto+Condensed:ital,wght@0,700;0,900;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,76 +7,61 @@
 /* ─── shadcn/ui CSS Variables ─── */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 84% 5%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 84% 5%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 5%;
-    --primary: 218 84% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 214 32% 91%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 214 32% 91%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 214 32% 91%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 218 84% 50%;
-    --radius: 0.5rem;
-  }
-  .dark {
-    --background: 222 84% 5%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 84% 5%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 218 84% 60%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 218 84% 60%;
+    --background: 222 24% 6%;
+    --foreground: 214 24% 92%;
+    --card: 218 25% 10%;
+    --card-foreground: 214 24% 92%;
+    --popover: 218 25% 10%;
+    --popover-foreground: 214 24% 92%;
+    --primary: 174 66% 50%;
+    --primary-foreground: 222 24% 6%;
+    --secondary: 218 25% 10%;
+    --secondary-foreground: 214 24% 92%;
+    --muted: 218 25% 10%;
+    --muted-foreground: 218 13% 59%;
+    --accent: 174 66% 50%;
+    --accent-foreground: 174 66% 50%;
+    --destructive: 0 86% 71%;
+    --destructive-foreground: 222 24% 6%;
+    --border: 218 24% 16%;
+    --input: 218 24% 16%;
+    --ring: 174 66% 50%;
+    --radius: 0.75rem;
   }
 }
 
 @layer utilities {
-  .font-condensed { font-family: 'Roboto Condensed', sans-serif; }
-  .font-caveat    { font-family: 'Caveat', cursive; }
-  .font-roboto    { font-family: 'Roboto', sans-serif; }
+  /* Keep the existing admin utility names readable on the dark palette. */
+  .text-navy { color: #E8ECF1 !important; }
+  .text-navy\/20 { color: rgb(232 236 241 / 0.2) !important; }
+  .text-navy\/30 { color: rgb(232 236 241 / 0.3) !important; }
+  .text-navy\/40 { color: #8A94A6 !important; }
+  .text-navy\/50 { color: rgb(138 148 166 / 0.8) !important; }
+  .text-navy\/60 { color: rgb(232 236 241 / 0.6) !important; }
+  .text-navy\/70 { color: rgb(232 236 241 / 0.7) !important; }
+
+  .font-condensed { font-family: 'Inter', sans-serif; }
+  .font-caveat    { font-family: 'JetBrains Mono', monospace; }
+  .font-roboto    { font-family: 'Inter', sans-serif; }
 
   /* ── Modern UI Utilities ── */
   .glass {
-    @apply backdrop-blur-[20px] bg-white/10 border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.05)];
+    @apply backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] shadow-[0_8px_32px_0_rgba(0,0,0,0.35)];
   }
   
   .glass-dark {
-    @apply backdrop-blur-[40px] bg-navy/80 border border-white/10 shadow-2xl;
+    @apply backdrop-blur-2xl bg-navy/60 border border-white/5 shadow-2xl;
   }
 
   .sidebar-premium {
-    @apply backdrop-blur-[50px] border-r border-white/10 shadow-2xl;
-    background: linear-gradient(180deg, rgba(3, 8, 22, 0.95) 0%, rgba(13, 25, 48, 0.9) 100%);
+    @apply backdrop-blur-[50px] border border-white/10 shadow-2xl;
+    background: linear-gradient(180deg, rgba(17, 23, 34, 0.96) 0%, rgba(10, 14, 20, 0.96) 100%);
   }
 
   /* Glassmorphism 2.0 - More Solid & Vibrant */
   .glass-premium {
-    @apply backdrop-blur-[40px] bg-white/45 border border-white/60 shadow-[0_20px_50px_-10px_rgba(3,8,22,0.1)];
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
-    box-shadow: 
-      inset 0 0 30px rgba(255, 255, 255, 0.3),
-      0 12px 40px -10px rgba(21, 87, 232, 0.1);
+    @apply backdrop-blur-xl bg-[#111722] border border-[#1F2633] shadow-[0_18px_45px_rgba(0,0,0,0.18)];
+    background: #111722;
   }
 
   .glass-reflection {
@@ -91,13 +76,12 @@
   }
 
   .mesh-gradient {
-    background-color: #f8fafc;
-    background-image: 
-      radial-gradient(at 0% 0%, hsla(222, 94%, 12%, 0.12) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(210, 100%, 50%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, hsla(215, 100%, 50%, 0.1) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, hsla(199, 100%, 50%, 0.1) 0px, transparent 50%),
-      radial-gradient(at 50% 50%, hsla(215, 100%, 55%, 0.05) 0px, transparent 70%);
+    background-color: #0A0E14;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+      radial-gradient(at 100% 0%, hsla(174, 79%, 50%, 0.06) 0px, transparent 42%);
+    background-size: 48px 48px, 48px 48px, auto;
   }
 
   .no-scrollbar {
@@ -106,6 +90,15 @@
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html, body, #root { min-height: 100%; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
 }
 
