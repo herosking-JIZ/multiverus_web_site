@@ -13,7 +13,7 @@ type SelectFieldProps = BaseFieldProps & SelectHTMLAttributes<HTMLSelectElement>
 
 type FormFieldProps = InputFieldProps | TextareaFieldProps | SelectFieldProps
 
-const baseClasses = "w-full px-6 py-4 rounded-2xl border border-navy/5 bg-white/40 backdrop-blur-md text-navy text-[15px] font-medium transition-all duration-500 focus:outline-none focus:border-vivid focus:bg-white focus:shadow-[0_0_0_1px_#1557E8,0_16px_32px_-12px_rgba(21,87,232,0.15)] placeholder:text-navy/20"
+const baseClasses = "w-full px-4 py-3 rounded-lg border border-[#1F2633] bg-[#0A0E14]/70 text-foreground text-[14px] font-medium transition-colors duration-200 focus:outline-none focus:border-teal focus:bg-[#0A0E14] focus:ring-2 focus:ring-teal/15 placeholder:text-muted-2/60"
 
 export default function FormField(props: FormFieldProps) {
   const { label, error, hint, as = 'input', ...rest } = props
@@ -21,24 +21,24 @@ export default function FormField(props: FormFieldProps) {
   return (
     <div className="flex flex-col gap-2.5 group/field">
       <div className="flex items-center justify-between px-1">
-        <label className="text-[11px] font-black text-navy/40 uppercase tracking-[0.15em] transition-colors duration-300 group-focus-within/field:text-vivid">
+        <label className="text-[11px] font-mono text-muted-2 uppercase tracking-[0.12em] transition-colors duration-200 group-focus-within/field:text-teal">
           {label}
         </label>
         {rest.required && (
-          <span className="text-[10px] font-black text-vivid/40 uppercase tracking-widest">Requis</span>
+          <span className="text-[10px] font-mono text-teal/70 uppercase tracking-widest">Requis</span>
         )}
       </div>
 
       <div className="relative">
         {as === 'textarea' ? (
           <textarea
-            className={cn(baseClasses, "min-h-[140px] resize-y leading-relaxed", error && "border-red-200 focus:border-red-500 focus:shadow-[0_0_0_1px_#EF4444,0_16px_32px_-12px_rgba(239,68,68,0.15)]")}
+            className={cn(baseClasses, "min-h-[140px] resize-y leading-relaxed", error && "border-red-500 focus:border-red-500 focus:ring-red-500/15")}
             {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
           />
         ) : as === 'select' ? (
           <div className="relative">
             <select
-              className={cn(baseClasses, "appearance-none cursor-pointer", error && "border-red-200 focus:border-red-500")}
+              className={cn(baseClasses, "appearance-none cursor-pointer", error && "border-red-500 focus:border-red-500")}
               {...(rest as SelectHTMLAttributes<HTMLSelectElement>)}
             >
               {(props as SelectFieldProps).options.map((o) => (
@@ -53,14 +53,14 @@ export default function FormField(props: FormFieldProps) {
           </div>
         ) : (
           <input
-            className={cn(baseClasses, error && "border-red-200 focus:border-red-500 focus:shadow-[0_0_0_1px_#EF4444,0_16px_32px_-12px_rgba(239,68,68,0.15)]")}
+            className={cn(baseClasses, error && "border-red-500 focus:border-red-500 focus:ring-red-500/15")}
             {...(rest as InputHTMLAttributes<HTMLInputElement>)}
           />
         )}
       </div>
 
       {hint && !error && (
-        <span className="text-[12px] text-navy/30 ml-1 font-medium leading-relaxed italic">{hint}</span>
+        <span className="text-[12px] text-muted-2 ml-1 font-medium leading-relaxed">{hint}</span>
       )}
       {error && (
         <div className="flex items-center gap-1.5 ml-1 text-red-500 animate-in slide-in-from-left-2 duration-300">

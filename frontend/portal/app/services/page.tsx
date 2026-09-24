@@ -40,7 +40,9 @@ export default function ServicesPage() {
             (typeof (service as any).image === 'string' ? (service as any).image : null)
 
           if (apiImage && typeof apiImage === 'string') {
-            apiImage = apiImage.replace('10.3.3.49', '10.3.3.50')
+            apiImage = apiImage
+              .replace('10.3.3.49', '100.119.90.39')
+              .replace('10.3.3.50', '100.119.90.39')
           }
 
           const fallbackImage = SERVICES_FALLBACK.find(s => s.slug === service.slug)?.backgroundImage ||
@@ -58,7 +60,7 @@ export default function ServicesPage() {
                   {/* Background Image Container - Highly Visible */}
                   <div className="absolute inset-0 z-0 transition-transform duration-1000 group-hover:scale-110">
                     {finalImage ? (
-                      finalImage.includes('10.3.3.50') ? (
+                      finalImage.includes('100.119.90.39') ? (
                         <img
                           src={finalImage}
                           alt={service.titre}

@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 import { setCredentials } from '@/store/authSlice'
 import type { RootState } from '@/store'
 import { login } from '@/services/auth.service'
@@ -43,6 +44,13 @@ export default function LoginPage() {
     },
   })
 
+  const loginError = axios.isAxiosError(mutation.error)
+    ? mutation.error.response?.data?.message
+      || (mutation.error.response?.status
+        ? `Requête refusée (HTTP ${mutation.error.response.status}).`
+        : `Erreur réseau: ${mutation.error.message}`)
+    : 'Erreur inattendue pendant la connexion.'
+
   return (
     <div className="min-h-screen mesh-gradient flex items-center justify-center px-4 relative overflow-hidden font-roboto">
       <div className="w-full max-w-[440px] relative z-10">
@@ -75,7 +83,7 @@ export default function LoginPage() {
                 {...register('email')} 
                 type="email" 
                 placeholder="admin@multiverus.dev"
-                className="w-full px-5 py-4 rounded-2xl border border-navy/5 bg-navy/[0.02] text-navy text-[14px] transition-all duration-200 focus:outline-none focus:border-vivid focus:bg-white focus:shadow-[0_0_0_4px_rgba(21,87,232,0.1)] placeholder:text-navy/20" 
+                className="w-full px-4 py-3 rounded-lg border border-[#1F2633] bg-[#0A0E14]/70 text-foreground text-[14px] transition-colors duration-200 focus:outline-none focus:border-teal focus:bg-[#0A0E14] focus:ring-2 focus:ring-teal/15 placeholder:text-muted-2/60" 
               />
               {errors.email && <span className="text-[11px] text-red-500 ml-1 font-medium italic">{errors.email.message}</span>}
             </div>
@@ -86,21 +94,21 @@ export default function LoginPage() {
                 {...register('password')} 
                 type="password" 
                 placeholder="••••••••" 
-                className="w-full px-5 py-4 rounded-2xl border border-navy/5 bg-navy/[0.02] text-navy text-[14px] transition-all duration-200 focus:outline-none focus:border-vivid focus:bg-white focus:shadow-[0_0_0_4px_rgba(21,87,232,0.1)] placeholder:text-navy/20" 
+                className="w-full px-4 py-3 rounded-lg border border-[#1F2633] bg-[#0A0E14]/70 text-foreground text-[14px] transition-colors duration-200 focus:outline-none focus:border-teal focus:bg-[#0A0E14] focus:ring-2 focus:ring-teal/15 placeholder:text-muted-2/60" 
               />
               {errors.password && <span className="text-[11px] text-red-500 ml-1 font-medium italic">{errors.password.message}</span>}
             </div>
 
             {mutation.isError && (
               <div className="text-[12px] text-red-600 text-center bg-red-50 border border-red-100 rounded-xl px-4 py-3 animate-shake">
-                Identifiants incorrects ou session expirée.
+                {loginError}
               </div>
             )}
 
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="mt-4 w-full bg-navy hover:bg-vivid active:scale-[0.98] disabled:opacity-60 text-white py-5 rounded-2xl font-black text-[14px] tracking-tight transition-all duration-500 shadow-[0_16px_32px_-8px_rgba(3,8,22,0.3)] hover:shadow-[0_20px_40px_-10px_rgba(21,87,232,0.4)] relative overflow-hidden group/btn font-condensed"
+              className="mt-4 w-full bg-teal hover:bg-teal/85 active:scale-[0.98] disabled:opacity-60 text-navy py-3 rounded-lg font-bold text-[13px] tracking-wide transition-colors duration-200 shadow-[0_12px_28px_-12px_rgba(45,212,191,0.65)] relative overflow-hidden group/btn"
             >
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
               <span className="relative z-10 uppercase tracking-widest">{mutation.isPending ? 'Authentification…' : 'Accéder au dashboard'}</span>

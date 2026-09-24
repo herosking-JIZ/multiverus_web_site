@@ -34,7 +34,7 @@ export default function AdminLayout() {
       <Sidebar />
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden relative">
         <TopBar onProfileClick={() => setProfileOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-6 lg:p-8 relative scroll-smooth custom-scrollbar">
+        <main className="flex-1 overflow-y-auto px-5 py-6 lg:px-8 lg:py-8 relative scroll-smooth custom-scrollbar">
           <Outlet />
         </main>
       </div>

@@ -2,7 +2,10 @@ import axios from 'axios'
 import { store } from '../store'
 import { setCsrfToken, setAccessToken, logout } from '../store/authSlice'
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://10.3.3.200:8080/api/v1';
+const configuredBaseURL = import.meta.env.VITE_API_URL || 'http://100.119.90.39:8080/api/v1';
+const baseURL = configuredBaseURL.startsWith('/') || /^https?:\/\//i.test(configuredBaseURL)
+  ? configuredBaseURL
+  : `http://${configuredBaseURL}`;
 
 const adminApi = axios.create({
   baseURL,
@@ -10,8 +13,7 @@ const adminApi = axios.create({
   withCredentials: true,
   headers: {
     'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
+    'Content-Type': 'application/json'
   }
 })
 

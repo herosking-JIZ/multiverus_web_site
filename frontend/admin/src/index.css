@@ -54,14 +54,14 @@
   }
 
   .sidebar-premium {
-    @apply backdrop-blur-[50px] border border-white/10 shadow-2xl;
-    background: linear-gradient(180deg, rgba(17, 23, 34, 0.96) 0%, rgba(10, 14, 20, 0.96) 100%);
+    @apply border border-white/[0.08] shadow-2xl;
+    background: #0A0E14;
   }
 
   /* Glassmorphism 2.0 - More Solid & Vibrant */
   .glass-premium {
-    @apply backdrop-blur-xl bg-[#111722] border border-[#1F2633] shadow-[0_18px_45px_rgba(0,0,0,0.18)];
-    background: #111722;
+    @apply backdrop-blur-xl border border-[#1F2633] shadow-[0_12px_32px_rgba(0,0,0,0.22)];
+    background: rgba(17, 23, 34, 0.82);
   }
 
   .glass-reflection {
@@ -78,10 +78,23 @@
   .mesh-gradient {
     background-color: #0A0E14;
     background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
-      radial-gradient(at 100% 0%, hsla(174, 79%, 50%, 0.06) 0px, transparent 42%);
-    background-size: 48px 48px, 48px 48px, auto;
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px),
+      radial-gradient(at 100% 0%, hsla(174, 79%, 50%, 0.07) 0px, transparent 42%);
+    background-size: 40px 40px, 40px 40px, auto;
+  }
+
+  .admin-surface {
+    background: rgba(17, 23, 34, 0.72);
+    border: 1px solid #1F2633;
+  }
+
+  .admin-page-title {
+    @apply text-[22px] font-bold tracking-tight text-foreground;
+  }
+
+  .admin-page-copy {
+    @apply text-[13px] leading-6 text-muted-2;
   }
 
   .no-scrollbar {
@@ -102,6 +115,10 @@
   }
 }
 
+button, input, select, textarea {
+  font: inherit;
+}
+
 @keyframes pulse-ring {
   0%   { transform: translate(20px, -20px) scale(1); opacity: 0.6; }
   100% { transform: translate(0px, 0px) scale(1.1); opacity: 1; }
@@ -118,5 +135,29 @@
 
 .animate-pulse-ring2 {
   animation: pulse-ring2 10s infinite alternate ease-in-out;
+}
+
+/* Keep legacy page classes aligned with the portal's tighter geometry. */
+.rounded-\[40px\] { border-radius: 0.875rem !important; }
+.rounded-\[32px\] { border-radius: 0.75rem !important; }
+.rounded-\[24px\] { border-radius: 0.625rem !important; }
+.rounded-2xl { border-radius: 0.75rem !important; }
+.rounded-xl { border-radius: 0.625rem !important; }
+
+/* Inline controls from legacy pages use the same surface language. */
+.bg-white\/20,
+.bg-white\/30,
+.bg-white\/40,
+.bg-navy\/5,
+.bg-navy\/\[0\.02\] {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.hover\:bg-white:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.focus\:bg-white:focus {
+  background-color: #0A0E14 !important;
 }
 

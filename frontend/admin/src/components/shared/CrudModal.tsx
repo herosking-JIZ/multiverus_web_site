@@ -28,20 +28,20 @@ export default function CrudModal({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-[600px] glass-premium rounded-[48px] p-8 sm:p-12 shadow-[0_48px_96px_-24px_rgba(0,0,0,0.3)] animate-in fade-in zoom-in-95 slide-in-from-bottom-8 duration-500 ease-out max-h-[90vh] overflow-y-auto no-scrollbar">
+      <div className="relative w-full max-w-[600px] glass-premium rounded-xl p-7 sm:p-9 shadow-[0_32px_64px_-24px_rgba(0,0,0,0.55)] animate-in fade-in zoom-in-95 slide-in-from-bottom-8 duration-500 ease-out max-h-[90vh] overflow-y-auto no-scrollbar">
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-8 right-8 w-12 h-12 rounded-2xl bg-navy/5 hover:bg-red-50 hover:text-red-500 flex items-center justify-center text-navy/30 transition-all duration-300 hover:rotate-90 active:scale-95"
+          className="absolute top-6 right-6 w-9 h-9 rounded-lg bg-white/[0.04] border border-white/10 hover:bg-red-500/10 hover:text-red-400 flex items-center justify-center text-muted transition-colors duration-200 active:scale-95"
         >
           <X size={20} />
         </button>
 
         {/* Header */}
         <div className="mb-10 pr-12">
-          <h2 className="text-[28px] sm:text-[32px] font-black text-navy font-condensed tracking-tighter leading-none">{title}</h2>
+          <h2 className="text-[22px] sm:text-[26px] font-bold text-foreground tracking-tight leading-none">{title}</h2>
           {subtitle && (
-            <p className="text-[14px] text-navy/40 mt-3 font-medium leading-relaxed">
+            <p className="text-[13px] text-muted-2 mt-3 font-medium leading-relaxed">
               {subtitle}
             </p>
           )}
@@ -49,7 +49,7 @@ export default function CrudModal({
 
         {/* Error */}
         {error && (
-          <div className="mb-8 p-5 rounded-3xl bg-red-50/80 border border-red-100/50 text-[13px] text-red-600 font-bold flex items-center gap-3 animate-in shake-in duration-300">
+          <div className="mb-8 p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-[13px] text-red-300 font-bold flex items-center gap-3 animate-in shake-in duration-300">
             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             {error}
           </div>
@@ -62,18 +62,18 @@ export default function CrudModal({
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-navy/5 mt-4">
+          <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-white/10 mt-3">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-navy/5 hover:bg-navy/10 text-navy text-[14px] font-black py-5 rounded-2xl transition-all duration-300 active:scale-[0.98]"
+              className="flex-1 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-foreground text-[13px] font-semibold py-3 rounded-lg transition-colors duration-200 active:scale-[0.98]"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-[1.5] bg-navy hover:bg-vivid disabled:opacity-60 text-white text-[14px] font-black py-5 rounded-2xl transition-all duration-500 shadow-[0_20px_40px_-12px_rgba(21,87,232,0.3)] hover:shadow-[0_24px_48px_-12px_rgba(21,87,232,0.4)] flex items-center justify-center gap-3 active:scale-[0.98] group"
+              className="flex-[1.5] bg-teal hover:bg-teal/85 disabled:opacity-60 text-navy text-[13px] font-bold py-3 rounded-lg transition-colors duration-200 shadow-[0_10px_24px_-10px_rgba(45,212,191,0.55)] flex items-center justify-center gap-3 active:scale-[0.98] group"
             >
               {loading ? (
                 <Loader2 size={18} className="animate-spin" />

@@ -26,11 +26,11 @@ export default function TopBar({ onProfileClick }: { onProfileClick: () => void 
   }
 
   return (
-    <header className="h-[76px] glass-premium m-3 mb-0 rounded-2xl flex items-center justify-between px-5 lg:px-7 z-10">
+    <header className="h-[76px] border-b border-white/[0.08] bg-[#0A0E14]/80 backdrop-blur-xl m-3 mb-0 rounded-xl flex items-center justify-between px-5 lg:px-7 z-10">
       {/* Page Info */}
       <div className="flex flex-col">
-        <span className="text-[10px] text-vivid/70 uppercase tracking-[0.18em] font-black font-condensed mb-1">MULTIVERUS / ADMIN</span>
-        <h1 className="text-[18px] font-bold text-navy tracking-tight font-condensed">
+        <span className="text-[10px] text-muted-2 uppercase tracking-[0.18em] font-mono mb-1">MULTIVERUS / ADMIN</span>
+        <h1 className="text-[18px] font-bold text-foreground tracking-tight">
           {pageLabel}
         </h1>
       </div>
@@ -47,8 +47,8 @@ export default function TopBar({ onProfileClick }: { onProfileClick: () => void 
               className="hidden sm:flex items-center gap-3 text-right group transition-all duration-300 hover:opacity-80"
             >
               <div className="flex flex-col">
-                <div className="text-[13px] font-bold text-navy leading-none mb-1 group-hover:text-vivid transition-colors">{user.nomComplet}</div>
-                <div className="inline-flex px-2 py-0.5 rounded-full bg-vivid/10 text-[10px] font-bold text-vivid uppercase tracking-wider">
+                <div className="text-[13px] font-semibold text-foreground leading-none mb-1 group-hover:text-teal transition-colors">{user.nomComplet}</div>
+                <div className="inline-flex px-2 py-0.5 rounded-full bg-teal/10 text-[10px] font-bold text-teal uppercase tracking-wider">
                   {user.role}
                 </div>
               </div>
@@ -57,14 +57,14 @@ export default function TopBar({ onProfileClick }: { onProfileClick: () => void 
 
           <button
             onClick={onProfileClick}
-            className="w-10 h-10 rounded-xl bg-vivid shadow-[0_8px_16px_rgba(45,212,191,0.2)] flex items-center justify-center text-navy transition-transform duration-200 hover:scale-105 active:scale-95"
+            className="w-10 h-10 rounded-lg bg-teal shadow-[0_8px_16px_rgba(45,212,191,0.2)] flex items-center justify-center text-navy transition-transform duration-200 hover:scale-105 active:scale-95"
           >
             <User size={20} />
           </button>
 
           <button
             onClick={handleLogout}
-            className="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-muted hover:text-red-400 hover:bg-red-500/10 hover:shadow-lg transition-all duration-200"
+            className="w-10 h-10 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center text-muted hover:text-red-400 hover:bg-red-500/10 hover:shadow-lg transition-all duration-200"
             aria-label="Se déconnecter"
           >
             <LogOut size={18} />

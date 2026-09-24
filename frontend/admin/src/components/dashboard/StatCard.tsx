@@ -15,14 +15,14 @@ export default function StatCard({ titre, valeur, evolution, icon, accent = fals
 
   return (
     <div className={cn(
-      'rounded-[32px] p-7 flex flex-col gap-5 transition-all duration-300 transform hover:-translate-y-2',
+      'rounded-[32px] p-6 flex flex-col gap-5 transition-all duration-300 transform hover:-translate-y-1',
       accent 
         ? 'bg-navy text-white shadow-[0_20px_40px_-12px_rgba(3,8,22,0.3)] border border-navy' 
         : 'glass-premium'
     )}>
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className={cn('text-[11px] font-black uppercase tracking-[0.1em]', accent ? 'text-white/40' : 'text-navy/40')}>
+        <span className={cn('text-[11px] font-mono uppercase tracking-[0.08em]', accent ? 'text-white/40' : 'text-muted-2')}>
           {titre}
         </span>
         <div className={cn('w-10 h-10 rounded-2xl grid place-items-center transition-transform hover:scale-110', accent ? 'bg-white/10' : 'bg-navy/5')}>
@@ -31,7 +31,7 @@ export default function StatCard({ titre, valeur, evolution, icon, accent = fals
       </div>
 
       {/* Value */}
-      <div className={cn('font-black text-[42px] leading-none tracking-tight font-condensed', accent ? 'text-white' : 'text-navy')}>
+      <div className={cn('font-bold text-[36px] leading-none tracking-tight', accent ? 'text-white' : 'text-foreground')}>
         {valeur}
       </div>
 

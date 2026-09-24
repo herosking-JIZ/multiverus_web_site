@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { appendFileSync } from 'fs'
 
-async function proxyRequest(request: NextRequest, { params }: { params: { path: string[] } }) {
+async function proxyRequest(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params
   const searchParams = request.nextUrl.searchParams.toString()
   const apiUrl = `http://100.119.90.39:8080/api/v1/${path.join('/')}${searchParams ? `?${searchParams}` : ''}`
