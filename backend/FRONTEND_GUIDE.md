@@ -1,4 +1,4 @@
-# Guide Frontend — API Broadway Technologies
+# Guide Frontend — API MultiVerus
 
 > Documentation pour développeur React junior.
 > Base URL en développement : `http://localhost:8080/api/v1`

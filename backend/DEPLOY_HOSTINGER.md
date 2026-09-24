@@ -1,4 +1,4 @@
-# Déploiement Broadway Technologies — VPS Hostinger
+# Déploiement MultiVerus — VPS Hostinger
 
 ## Architecture
 
@@ -155,7 +155,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=ton-email@gmail.com
 SMTP_PASS=app_password_gmail_16_chars
-SMTP_FROM="Broadway Technologies <ton-email@gmail.com>"
+SMTP_FROM="MultiVerus <ton-email@gmail.com>"
 
 # ─── APP ────────────────────────────────────────────────────────────
 NODE_ENV=production

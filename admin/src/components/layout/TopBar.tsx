@@ -29,7 +29,7 @@ export default function TopBar({ onProfileClick }: { onProfileClick: () => void 
     <header className="h-20 glass-premium m-4 mb-0 rounded-[32px] flex items-center justify-between px-8 z-10 border border-white/40">
       {/* Page Info */}
       <div className="flex flex-col">
-        <span className="text-[10px] text-vivid/60 uppercase tracking-widest font-black font-condensed mb-0.5">Broadway / Admin</span>
+        <span className="text-[10px] text-vivid/60 uppercase tracking-widest font-black font-condensed mb-0.5">MultiVerus / Admin</span>
         <h1 className="text-[20px] font-black text-navy tracking-tight font-condensed">
           {pageLabel}
         </h1>

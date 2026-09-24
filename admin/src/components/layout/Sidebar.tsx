@@ -38,7 +38,7 @@ export default function Sidebar() {
           <div className="flex flex-col items-center relative z-10 w-full px-2">
             <div className="bg-[#f8f9fa] backdrop-blur-md p-3.5 px-6 rounded-2xl border border-white shadow-sm mb-2 w-full flex items-center justify-center group/logo overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-vivid/5 to-transparent opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500" />
-              <img src="/logo.svg" alt="Broadway" className="h-8 w-auto min-w-[120px] relative z-10" />
+              <img src="/logo.svg" alt="MultiVerus" className="h-8 w-auto min-w-[120px] relative z-10" />
             </div>
             <span className="text-[10px] text-vivid font-black uppercase tracking-[0.4em] font-condensed">Administration</span>
           </div>
@@ -98,7 +98,7 @@ export default function Sidebar() {
       {!sidebarCollapsed && (
         <div className="p-4 mx-4 mb-2 rounded-2xl bg-white/5 border border-white/5 group transition-all duration-500 hover:bg-white/10">
           <div className="text-[9px] text-white/20 uppercase tracking-[0.3em] mb-1 font-bold">Support 24/7</div>
-          <div className="text-[11px] text-sky font-bold">info@Broadwaytechgroup.com</div>
+          <div className="text-[11px] text-sky font-bold">info@MultiVerustechgroup.com</div>
         </div>
       )}
 
