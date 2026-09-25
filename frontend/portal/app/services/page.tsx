@@ -61,6 +61,7 @@ export default function ServicesPage() {
                   <div className="absolute inset-0 z-0 transition-transform duration-1000 group-hover:scale-110">
                     {finalImage ? (
                       finalImage.includes('100.119.90.39') ? (
+                      finalImage.includes('100.119.90.39') ? (
                         <img
                           src={finalImage}
                           alt={service.titre}

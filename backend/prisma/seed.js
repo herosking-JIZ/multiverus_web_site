@@ -1,5 +1,5 @@
 // ============================================================
-// BROADWAY TECHNOLOGIES — Seed de données de test
+// MULTIVERUS — Seed de données de test
 // Usage : node prisma/seed.js
 // ============================================================
 
@@ -93,14 +93,14 @@ async function main() {
   const [adminPwd, editorPwd] = await Promise.all([hash('Admin1234!'), hash('Editor1234!')]);
 
   const admin = await prisma.utilisateur.create({
-    data: { nomComplet: 'Super Admin',  email: 'admin@broadway.com',  motDePasse: adminPwd,  role: 'ADMIN', actif: true },
+    data: { nomComplet: 'Super Admin',  email: 'admin@multiverus.com',  motDePasse: adminPwd,  role: 'ADMIN', actif: true },
   });
   const editor = await prisma.utilisateur.create({
-    data: { nomComplet: 'Éditeur Test', email: 'editor@broadway.com', motDePasse: editorPwd, role: 'ADMIN', actif: true },
+    data: { nomComplet: 'Éditeur Test', email: 'editor@multiverus.com', motDePasse: editorPwd, role: 'ADMIN', actif: true },
   });
 
-  console.log('   ✅ admin@broadway.com   →  Admin1234!');
-  console.log('   ✅ editor@broadway.com  →  Editor1234!\n');
+  console.log('   ✅ admin@multiverus.com   →  Admin1234!');
+  console.log('   ✅ editor@multiverus.com  →  Editor1234!\n');
 
   // ────────────────────────────────────────
   // 3. MÉDIAS PUBLICS — fichiers JPEG réels
@@ -126,9 +126,9 @@ async function main() {
 
   // Produits
   const mediaProduksReels = await Promise.all([
-    prisma.media.create({ data: { ...readRealMedia('produits', 'broadway-shield.jpg', 'Broadway Shield - Plateforme SOC'), uploadePar: admin.id } }).catch(() => null),
-    prisma.media.create({ data: { ...readRealMedia('produits', 'bureau-virtuel-mydesk.png', 'Broadway CloudDesk - Bureau Virtuel'), uploadePar: admin.id } }).catch(() => null),
-    prisma.media.create({ data: { ...readRealMedia('produits', 'énergie.jpg', 'Broadway GreenSync - Gestion Énergétique'), uploadePar: admin.id } }).catch(() => null),
+    prisma.media.create({ data: { ...readRealMedia('produits', 'multiverus-shield.jpg', 'MultiVerus Shield - Plateforme SOC'), uploadePar: admin.id } }).catch(() => null),
+    prisma.media.create({ data: { ...readRealMedia('produits', 'bureau-virtuel-mydesk.png', 'MultiVerus CloudDesk - Bureau Virtuel'), uploadePar: admin.id } }).catch(() => null),
+    prisma.media.create({ data: { ...readRealMedia('produits', 'énergie.jpg', 'MultiVerus GreenSync - Gestion Énergétique'), uploadePar: admin.id } }).catch(() => null),
   ]);
 
   // Projets/Clients
@@ -280,9 +280,9 @@ async function main() {
 
   const produitsData = [
     {
-      nom:         'Broadway Shield',
-      slug:        'broadway-shield',
-      description: 'Une plateforme intelligente (SOC) de surveillance et de remédiation en temps réel. Broadway Shield protège vos données contre les attaques zero-day et les menaces internes.',
+      nom:         'MultiVerus Shield',
+      slug:        'multiverus-shield',
+      description: 'Une plateforme intelligente (SOC) de surveillance et de remédiation en temps réel. MultiVerus Shield protège vos données contre les attaques zero-day et les menaces internes.',
       categorie:   'Sécurité',
       statut:      'ACTIF',
       features:    ['Détection IA des anomalies 24/7', 'Tableau de bord centralisé', 'Automatisation des réponses (SOAR)', 'Rapports de conformité en un clic'],
@@ -290,8 +290,8 @@ async function main() {
       imageId:     mediaProduksReels[0]?.id || null,
     },
     {
-      nom:         'Broadway CloudDesk',
-      slug:        'broadway-clouddesk',
+      nom:         'MultiVerus CloudDesk',
+      slug:        'multiverus-clouddesk',
       description: 'Votre bureau virtuel accessible partout. CloudDesk unifie vos applications, vos fichiers et vos communications dans un espace de travail ultra-rapide et hautement sécurisé.',
       categorie:   'Productivité',
       statut:      'ACTIF',
@@ -300,8 +300,8 @@ async function main() {
       imageId:     mediaProduksReels[1]?.id || null,
     },
     {
-      nom:         'Broadway GreenSync',
-      slug:        'broadway-greensync',
+      nom:         'MultiVerus GreenSync',
+      slug:        'multiverus-greensync',
       description: 'Un logiciel intelligent de gestion énergétique pour vos parcs immobiliers et industriels. Surveillez, lissez vos pics de consommation et réduisez vos coûts d\'énergie de 30% en moyenne.',
       categorie:   'Énergie',
       statut:      'ACTIF',
@@ -420,8 +420,8 @@ async function main() {
       nomComplet:    'Fatoumata Diallo',
       email:         'f.diallo@banque-sahel.com',
       organisation:  'Banque du Sahel',
-      sujet:         'Intégration CRM — Broadway CRM',
-      message:       "Nous avons besoin d'une démonstration de Broadway CRM pour notre direction commerciale. Nous avons environ 50 utilisateurs potentiels. Merci de nous proposer un RDV la semaine prochaine.",
+      sujet:         'Intégration CRM — MultiVerus CRM',
+      message:       "Nous avons besoin d'une démonstration de MultiVerus CRM pour notre direction commerciale. Nous avons environ 50 utilisateurs potentiels. Merci de nous proposer un RDV la semaine prochaine.",
       statut:        'EN_COURS',
       notesInternes: 'RDV planifié le 25/04/2026. Contact : Fatoumata, directrice commerciale.',
       traitePar:     admin.id,
@@ -474,7 +474,7 @@ async function main() {
     'c3d4e5f6-a7b8-9012-cdef-123456789012',
     'd4e5f6a7-b8c9-0123-defa-234567890123',
   ];
-  const pages = ['/', '/services', '/services/developpement-web-mobile', '/produits', '/produits/broadway-crm', '/contact', '/references'];
+  const pages = ['/', '/services', '/services/developpement-web-mobile', '/produits', '/produits/multiverus-crm', '/contact', '/references'];
   const now   = new Date();
   const events = [];
 
@@ -499,8 +499,8 @@ async function main() {
   console.log('═══════════════════════════════════════════════════════');
   console.log('✅  Seed terminé avec succès !\n');
   console.log('COMPTES DE TEST :');
-  console.log('  admin@broadway.com   →  Admin1234!  (rôle ADMIN)');
-  console.log('  editor@broadway.com  →  Editor1234! (rôle ADMIN)');
+  console.log('  admin@multiverus.com   →  Admin1234!  (rôle ADMIN)');
+  console.log('  editor@multiverus.com  →  Editor1234! (rôle ADMIN)');
   console.log('\nDONNÉES CRÉÉES :');
   console.log(`  Médias      : ${totalMedias} total (images réelles uniquement)`);
   console.log(`    • ${mediaPublicsCount} images publiques (JPEG)`);
@@ -519,7 +519,7 @@ async function main() {
   console.log(`    ${BASE_URL}/uploads/public/kader_kadi.jpeg`);
   console.log(`    ${BASE_URL}/uploads/public/portail.jpeg`);
   console.log('  Images produits :');
-  console.log(`    ${BASE_URL}/uploads/produits/broadway-shield.jpg`);
+  console.log(`    ${BASE_URL}/uploads/produits/multiverus-shield.jpg`);
   console.log(`    ${BASE_URL}/uploads/produits/bureau-virtuel-mydesk.png`);
   console.log('  Images clients :');
   console.log(`    ${BASE_URL}/uploads/clients/ministere-economie.jpg`);

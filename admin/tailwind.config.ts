@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Broadway Brand */
+        /* MultiVerus Brand */
         navy:  '#030816',
         blue:  '#0047AB',
         vivid: '#1557E8',

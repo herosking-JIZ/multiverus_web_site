@@ -14,7 +14,7 @@ class LeadService {
     // Notification email (non bloquant)
     setImmediate(() => {
       transporter.sendMail({
-        from: `"Broadway Technologies" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
+        from: `"MultiVerus" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
         to: process.env.SMTP_USER,
         subject: `[Nouveau lead] ${lead.sujet}`,
         html: `
