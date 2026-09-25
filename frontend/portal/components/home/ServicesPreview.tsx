@@ -46,7 +46,7 @@ export default function ServicesPreview() {
               <h3 className="text-[24px] font-black mb-2 text-foreground leading-tight">{service.titre}</h3>
               <p className="text-[15px] text-muted-2 leading-[1.7] mb-6 flex-1">{service.description}</p>
               <div className="flex flex-wrap gap-2">
-                {service.features.slice(0, 3).map((f) => (
+                {service.features?.slice(0, 3).map((f) => (
                   <span key={f} className="font-mono text-[11px] text-muted-2 px-3 py-1 rounded-lg border border-white/[0.08] bg-white/[0.03]">{f}</span>
                 ))}
               </div>
