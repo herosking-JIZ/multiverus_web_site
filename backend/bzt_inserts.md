@@ -1,6 +1,6 @@
 # Données à insérer dans la base de données `bzt`
 
-> Fichier de référence — Broadway Tech Group  
+> Fichier de référence — MultiVerus  
 > Généré le 01/06/2026  
 > Tables concernées : `produits`, `services`, `projets`
 
@@ -8,24 +8,24 @@
 
 ## 1. PRODUITS (3 entrées)
 
-### Broadway Shield
+### MultiVerus Shield
 | Champ | Valeur |
 |---|---|
-| **nom** | Broadway Shield |
-| **slug** | broadway-shield |
+| **nom** | MultiVerus Shield |
+| **slug** | multiverus-shield |
 | **categorie** | Sécurité |
 | **statut** | ACTIF |
 | **actif** | true |
-| **description** | Une plateforme intelligente (SOC) de surveillance et de remédiation en temps réel. Broadway Shield protège vos données contre les attaques zero-day et les menaces internes. |
+| **description** | Une plateforme intelligente (SOC) de surveillance et de remédiation en temps réel. MultiVerus Shield protège vos données contre les attaques zero-day et les menaces internes. |
 | **features** | `["Détection IA des anomalies 24/7", "Tableau de bord centralisé", "Automatisation des réponses (SOAR)", "Rapports de conformité en un clic"]` |
 
 ---
 
-### Broadway CloudDesk
+### MultiVerus CloudDesk
 | Champ | Valeur |
 |---|---|
-| **nom** | Broadway CloudDesk |
-| **slug** | broadway-clouddesk |
+| **nom** | MultiVerus CloudDesk |
+| **slug** | multiverus-clouddesk |
 | **categorie** | Productivité |
 | **statut** | ACTIF |
 | **actif** | true |
@@ -34,11 +34,11 @@
 
 ---
 
-### Broadway GreenSync
+### MultiVerus GreenSync
 | Champ | Valeur |
 |---|---|
-| **nom** | Broadway GreenSync |
-| **slug** | broadway-greensync |
+| **nom** | MultiVerus GreenSync |
+| **slug** | multiverus-greensync |
 | **categorie** | Énergie |
 | **statut** | ACTIF |
 | **actif** | true |

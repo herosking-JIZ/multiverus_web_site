@@ -60,7 +60,7 @@ class MailService {
                             <path d="M9 2L11.5 7H16.5L12.5 10.5L14 16L9 13L4 16L5.5 10.5L1.5 7H6.5L9 2Z" fill="#0D0D0D"/>
                         </svg>
                     </div>
-                    <span class="logo-name">BROADWAY TECHNOLOGIES</span>
+                    <span class="logo-name">MULTIVERUS</span>
                 </div>  
                 <span class="header-tag">SÉCURITÉ DU COMPTE</span>
             </div>
@@ -72,7 +72,7 @@ class MailService {
       </div>
 
       <p>Bonjour,</p>
-      <p>Vous avez effectué une demande de réinitialisation du mot de passe associé à votre compte Broadway Technologies.</p>
+      <p>Vous avez effectué une demande de réinitialisation du mot de passe associé à votre compte MultiVerus.</p>
       <p>Ce lien sécurisé est valide pendant <strong>15 minutes</strong>. Passé ce délai, vous devrez effectuer une nouvelle demande.</p>
 
       <div class="cta-wrapper">
@@ -94,7 +94,7 @@ class MailService {
     </div>
 
     <div class="footer">
-      <span>© ${new Date().getFullYear()} BROADWAY TECHNOLOGIES</span>
+      <span>© ${new Date().getFullYear()} MULTIVERUS</span>
       <span>CONFIDENTIEL</span>
     </div>
 

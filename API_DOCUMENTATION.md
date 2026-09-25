@@ -1,7 +1,7 @@
-# Broadway Technologies — Documentation API
+# MultiVerus — Documentation API
 
 **Version :** 1.0  
-**Base URL :** `https://api.broadway-technologies.com/api/v1`  
+**Base URL :** `https://api.multiverus.com/api/v1`  
 **Format :** JSON (sauf export CSV)  
 **Encodage :** UTF-8
 
@@ -27,7 +27,7 @@
 ### URL de base
 
 ```
-https://api.broadway-technologies.com/api/v1
+https://api.multiverus.com/api/v1
 ```
 
 ### Headers communs
@@ -122,7 +122,7 @@ Crée un compte administrateur (limité à 10 comptes max).
 ```json
 {
   "nomComplet": "Jean Dupont",
-  "email": "jean@broadway.com",
+  "email": "contact@multiverus.com",
   "password": "MonMot2Passe!"
 }
 ```
@@ -137,7 +137,7 @@ Crée un compte administrateur (limité à 10 comptes max).
   "data": {
     "id": "uuid",
     "nomComplet": "Jean Dupont",
-    "email": "jean@broadway.com",
+    "email": "contact@multiverus.com",
     "role": "ADMIN"
   }
 }
@@ -150,7 +150,7 @@ Crée un compte administrateur (limité à 10 comptes max).
 **Body :**
 ```json
 {
-  "email": "jean@broadway.com",
+  "email": "contact@multiverus.com",
   "password": "MonMot2Passe!"
 }
 ```
@@ -164,7 +164,7 @@ Crée un compte administrateur (limité à 10 comptes max).
     "user": {
       "id": "uuid",
       "nomComplet": "Jean Dupont",
-      "email": "jean@broadway.com",
+      "email": "contact@multiverus.com",
       "role": "ADMIN",
       "lastLogin": "2026-04-16T10:00:00.000Z"
     },
@@ -239,7 +239,7 @@ Envoie un email de réinitialisation.
 **Body :**
 ```json
 {
-  "email": "jean@broadway.com"
+  "email": "contact@multiverus.com"
 }
 ```
 
@@ -323,7 +323,7 @@ Retourne la liste des services actifs, triés par ordre.
       "slug": "developpement-web",
       "description": "Création de sites et applications web sur mesure.",
       "icone": "code",
-      "imageUrl": "https://cdn.broadway.com/services/dev-web.jpg",
+      "imageUrl": "https://cdn.multiverus.com/services/dev-web.jpg",
       "ordre": 0
     }
   ],
@@ -350,7 +350,7 @@ Retourne la liste des services actifs, triés par ordre.
     "slug": "developpement-web",
     "description": "...",
     "icone": "code",
-    "imageUrl": "https://cdn.broadway.com/services/dev-web.jpg",
+    "imageUrl": "https://cdn.multiverus.com/services/dev-web.jpg",
     "ordre": 0
   }
 }
@@ -373,7 +373,7 @@ Retourne la liste des services actifs, triés par ordre.
   "titre": "Développement Web",
   "description": "Création de sites et applications web sur mesure.",
   "icone": "code",
-  "imageUrl": "https://cdn.broadway.com/services/dev-web.jpg",
+  "imageUrl": "https://cdn.multiverus.com/services/dev-web.jpg",
   "ordre": 0,
   "actif": true
 }
@@ -526,13 +526,13 @@ Retourne uniquement les produits `actif = true` et `statut ≠ ARCHIVE`.
   "data": [
     {
       "id": "uuid",
-      "nom": "Broadway CRM",
-      "slug": "broadway-crm",
+      "nom": "MultiVerus CRM",
+      "slug": "multiverus-crm",
       "description": "Solution CRM sur mesure.",
       "categorie": "Logiciel",
       "statut": "ACTIF",
       "features": ["Gestion contacts", "Pipeline ventes", "Reporting"],
-      "imageUrl": "https://cdn.broadway.com/produits/crm.jpg"
+      "imageUrl": "https://cdn.multiverus.com/produits/crm.jpg"
     }
   ],
   "total": 8,
@@ -559,12 +559,12 @@ Retourne uniquement les produits `actif = true` et `statut ≠ ARCHIVE`.
 **Body :**
 ```json
 {
-  "nom": "Broadway CRM",
+  "nom": "MultiVerus CRM",
   "description": "Solution CRM sur mesure pour les PME.",
   "categorie": "Logiciel",
   "statut": "ACTIF",
   "features": ["Gestion contacts", "Pipeline ventes", "Reporting"],
-  "imageUrl": "https://cdn.broadway.com/produits/crm.jpg",
+  "imageUrl": "https://cdn.multiverus.com/produits/crm.jpg",
   "actif": true
 }
 ```
@@ -637,7 +637,7 @@ Retourne les projets publiés (`publie = true`).
       "secteur": "Télécommunications",
       "description": "Migration et modernisation du système d'information.",
       "technologies": ["Node.js", "PostgreSQL", "React", "Docker"],
-      "logoClientUrl": "https://cdn.broadway.com/clients/orange.png",
+      "logoClientUrl": "https://cdn.multiverus.com/clients/orange.png",
       "dateRealisation": "2025-12-01"
     }
   ],
@@ -664,7 +664,7 @@ Retourne les projets publiés (`publie = true`).
   "secteur": "Télécommunications",
   "description": "Migration et modernisation du système d'information.",
   "technologies": ["Node.js", "PostgreSQL", "React"],
-  "logoClientUrl": "https://cdn.broadway.com/clients/orange.png",
+  "logoClientUrl": "https://cdn.multiverus.com/clients/orange.png",
   "dateRealisation": "2025-12-01",
   "publie": true
 }
@@ -731,7 +731,7 @@ Retourne tous les partenaires actifs, triés par `ordre`.
     {
       "id": "uuid",
       "nom": "Microsoft",
-      "logoUrl": "https://cdn.broadway.com/partenaires/microsoft.png",
+      "logoUrl": "https://cdn.multiverus.com/partenaires/microsoft.png",
       "siteWeb": "https://microsoft.com",
       "ordre": 0
     }
@@ -751,7 +751,7 @@ Retourne tous les partenaires actifs, triés par `ordre`.
 ```json
 {
   "nom": "Microsoft",
-  "logoUrl": "https://cdn.broadway.com/partenaires/microsoft.png",
+  "logoUrl": "https://cdn.multiverus.com/partenaires/microsoft.png",
   "siteWeb": "https://microsoft.com",
   "ordre": 0,
   "actif": true
@@ -1051,7 +1051,7 @@ const response = await fetch('/api/v1/admin/medias/upload', {
     "nomFichier": "logo-client.png",
     "typeMime": "image/png",
     "tailleOctets": 245760,
-    "url": "https://cdn.broadway.com/services/1713261600000-a1b2c3d4e5f6.png",
+    "url": "https://cdn.multiverus.com/services/1713261600000-a1b2c3d4e5f6.png",
     "altText": null,
     "dossier": "services",
     "uploadePar": "uuid-admin",
@@ -1281,10 +1281,10 @@ Retourne les KPIs agrégés pour une période donnée.
 ```
 1. Admin sélectionne un fichier
 2. POST /admin/medias/upload (multipart/form-data)
-   └─ Réponse : { data: { url: "https://cdn.broadway.com/..." } }
+   └─ Réponse : { data: { url: "https://cdn.multiverus.com/..." } }
 3. Copier data.url
 4. Créer/modifier une ressource avec imageUrl = data.url
-   ex: POST /admin/services { imageUrl: "https://cdn.broadway.com/..." }
+   ex: POST /admin/services { imageUrl: "https://cdn.multiverus.com/..." }
 ```
 
 ---
