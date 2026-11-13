@@ -1,6 +1,20 @@
 const authService = require('../services/auth.service');
 const prisma = require('../lib/prisma');
 
+const getRefreshTokenCookieOptions = () => {
+    const isProd = process.env.NODE_ENV === 'production';
+    const sameSite = process.env.COOKIE_SAMESITE || (isProd ? 'None' : 'Lax');
+    const secure = sameSite === 'None' || isProd || process.env.COOKIE_SECURE === 'true';
+
+    return {
+        httpOnly: true,
+        secure,
+        sameSite,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
+        domain: process.env.COOKIE_DOMAIN || undefined,
+    };
+};
+
 // Outil interne pour créer une trace d'audit pour le backend
 const logAction = async (req, userId, action, cible, detail) => {
     try {
@@ -43,12 +57,7 @@ class AuthController {
             const data = await authService.login(email, password);
 
             // SÉCURITÉ : Refresh Token en HTTP-ONLY Cookie
-            res.cookie('refreshToken', data.refreshToken, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict',
-                maxAge: 7 * 24 * 60 * 60 * 1000 // 7 jours
-            });
+            res.cookie('refreshToken', data.refreshToken, getRefreshTokenCookieOptions());
 
             // LOG DB : Connexion
             await logAction(req, data.user.id, 'LOGIN', 'UTILISATEUR', { status: 'success' });
@@ -74,12 +83,7 @@ class AuthController {
             const data = await authService.refreshToken(refreshToken);
 
             // Set the new rotated refresh token 
-            res.cookie('refreshToken', data.refreshToken, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict',
-                maxAge: 7 * 24 * 60 * 60 * 1000
-            });
+            res.cookie('refreshToken', data.refreshToken, getRefreshTokenCookieOptions());
 
             return res.status(200).json({
                 success: true,
@@ -99,11 +103,7 @@ class AuthController {
                 return res.status(401).json({ success: false, message: 'Déconnexion échouée' });
             }
             // On efface le cookie côté front
-            res.clearCookie('refreshToken', {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict'
-            });
+            res.clearCookie('refreshToken', getRefreshTokenCookieOptions());
 
             await logAction(req, req.user.id, 'LOGOUT', 'UTILISATEUR', {});
 
@@ -120,11 +120,7 @@ class AuthController {
                 data: { refreshToken: null }
             });
 
-            res.clearCookie('refreshToken', {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict'
-            });
+            res.clearCookie('refreshToken', getRefreshTokenCookieOptions());
 
             await logAction(req, req.user.id, 'LOGOUT_GLOBAL', 'UTILISATEUR', { info: "Toutes sessions détruites" });
 

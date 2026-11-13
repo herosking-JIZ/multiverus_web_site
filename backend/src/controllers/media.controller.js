@@ -4,6 +4,55 @@ const { getPagination, paginatedResponse } = require('../utils/paginate');
 const AppError = require('../utils/appError');
 
 class MediaController {
+  /**
+   * Génération d'URL présignée pour l'upload direct vers Cloudflare R2 / S3 (Serverless)
+   */
+  async getPresignedUrl(req, res, next) {
+    try {
+      const { nomFichier, typeMime, tailleOctets, dossier, altText } = req.body;
+      const result = await mediaService.initiatePresignedUpload({
+        nomFichier,
+        typeMime,
+        tailleOctets,
+        dossier,
+        userId: req.user?.id,
+        altText,
+      });
+
+      await logAction(req, req.user?.id, 'INITIATE_PRESIGNED_UPLOAD', 'MEDIA', result.mediaId, {
+        nomFichier,
+        typeMime,
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: "URL d'upload présignée générée avec succès.",
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   * Confirmation de l'upload après transfert direct vers S3 / Cloudflare R2
+   */
+  async confirmUpload(req, res, next) {
+    try {
+      const media = await mediaService.confirmUpload(req.params.id, req.body);
+
+      await logAction(req, req.user?.id, 'CONFIRM_UPLOAD', 'MEDIA', media.id);
+
+      return res.json({
+        success: true,
+        message: 'Upload confirmé avec succès.',
+        data: media,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async upload(req, res, next) {
     try {
       if (!req.file) throw new AppError('Aucun fichier reçu.', 400);

@@ -41,30 +41,47 @@ const uploadsDir = process.env.MEDIA_STORAGE_PATH
     : path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(uploadsDir));
 
-// Configuration CORS (Toutes origines autorisées actuellement)
+// Configuration CORS avancée (multi-environnements & Serverless)
+const configuredFrontendUrls = (process.env.FRONTEND_URL || '')
+    .split(',')
+    .map(url => url.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+
 const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:5173',
     'http://100.119.90.39:3000',
     'http://100.119.90.39:5173',
     'http://100.119.90.39',
-    process.env.FRONTEND_URL,
+    ...configuredFrontendUrls,
 ].filter(Boolean);
 
 app.use(cors({
     origin: (origin, callback) => {
+        // Requêtes serveur-à-serveur, curl, Vercel Crons ou origines autorisées
         if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
+            return callback(null, true);
         }
+        // Autoriser dynamiquement les ports localhost en développement
+        if (process.env.NODE_ENV !== 'production' && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)) {
+            return callback(null, true);
+        }
+        // Autoriser les déploiements de prévisualisation Vercel (*.vercel.app)
+        if ((process.env.ALLOW_VERCEL_PREVIEWS === 'true' || process.env.NODE_ENV !== 'production') && origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        }
+        callback(new Error(`Not allowed by CORS: ${origin}`));
     },
-    credentials: true, // indispensable pour les cookies CSRF
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'x-csrf-token'],
+    credentials: true, // indispensable pour les cookies CSRF et RefreshToken
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token', 'X-CSRF-TOKEN', 'Accept', 'x-requested-with'],
 }));
 
-
-
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
 
 // ==========================================
 // 0. LOGGING DES REQUÊTES (TERMINAL)
