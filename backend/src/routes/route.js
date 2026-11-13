@@ -13,6 +13,7 @@ const partenaireRoutes = require('./partenaire.routes');
 const leadRoutes = require('./lead.routes');
 const mediaRoutes = require('./media.routes');
 const analyticsRoutes = require('./analytics.routes');
+const cronRoutes = require('./cron.routes');
 
 const router = express.Router();
 
@@ -35,5 +36,6 @@ router.use('/', partenaireRoutes);
 router.use('/', leadRoutes);
 router.use('/', mediaRoutes);
 router.use('/', analyticsRoutes);
+router.use('/cron', cronRoutes);
 
 module.exports = router;
