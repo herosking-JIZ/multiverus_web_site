@@ -5,7 +5,7 @@ const { hashPassword } = require('../src/utils/hash');
 async function createAdmin() {
   const email = process.env.ADMIN_EMAIL || 'cprzachk@gmail.com';
   const password = process.env.ADMIN_PASSWORD || 'Heroskingjesus100*';
-  const nomComplet = process.env.ADMIN_NAME || 'Administrateur';
+  const nomComplet = process.env.ADMIN_NAME || 'Zacharie Compaore';
 
   console.log(`🔐 Création du compte administrateur pour : ${email}...`);
 
@@ -42,3 +42,4 @@ async function createAdmin() {
 }
 
 createAdmin();
+
