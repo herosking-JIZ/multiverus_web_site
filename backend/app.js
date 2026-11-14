@@ -127,6 +127,45 @@ app.get('/api/v1/csrf-token', (req, res) => {
     res.json({ success: true, csrfToken: token });
 });
 
+// Route publique de diagnostic et santé (vérifie la connexion à la base de données)
+app.get('/api/v1/health', async (req, res) => {
+    try {
+        const prismaClient = require('./src/lib/prisma');
+        // Test réel de communication SQL
+        await prismaClient.$queryRaw`SELECT 1 as connected`;
+
+        // Compter les tables dans le schéma public
+        const tables = await prismaClient.$queryRaw`
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema = 'public' AND table_type = 'BASE TABLE'
+            ORDER BY table_name;
+        `;
+
+        return res.status(200).json({
+            success: true,
+            status: 'healthy',
+            database: {
+                connected: true,
+                tablesCount: tables.length,
+                tables: tables.map(t => t.table_name),
+            },
+            uptime: Math.floor(process.uptime()),
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        return res.status(503).json({
+            success: false,
+            status: 'unhealthy',
+            database: {
+                connected: false,
+                error: error.message
+            },
+            timestamp: new Date().toISOString()
+        });
+    }
+});
+
 // Debug CSRF — affiche le token reçu vs le cookie présent (dev uniquement)
 if (process.env.NODE_ENV !== 'production') {
     app.use((req, _res, next) => {
@@ -150,6 +189,7 @@ app.get('/', (req, res) => {
         version: 'v1',
         endpoints: {
             csrfToken: 'GET /api/v1/csrf-token',
+            health: 'GET /api/v1/health',
             baseApi: '/api/v1'
         }
     });

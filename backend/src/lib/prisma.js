@@ -9,12 +9,22 @@ const { Pool } = require('pg');
 const globalForPrisma = globalThis;
 
 if (!globalForPrisma.prisma) {
+    const isRemoteDb = Boolean(
+        process.env.DATABASE_URL && (
+            process.env.DATABASE_URL.includes('supabase') ||
+            process.env.DATABASE_URL.includes('neon') ||
+            process.env.DATABASE_URL.includes('sslmode=require') ||
+            process.env.NODE_ENV === 'production'
+        )
+    );
+
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
         // Limiter la taille du pool en serverless (configurable selon le pooler Neon / Supabase)
         max: process.env.PG_MAX_POOL_SIZE ? parseInt(process.env.PG_MAX_POOL_SIZE, 10) : 10,
         idleTimeoutMillis: 30000,
         connectionTimeoutMillis: 5000,
+        ssl: isRemoteDb ? { rejectUnauthorized: false } : undefined,
     });
 
     const adapter = new PrismaPg(pool);
