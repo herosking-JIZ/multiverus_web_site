@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const prisma = require('../lib/prisma');
 const storage = require('../lib/storage');
 const AppError = require('../utils/appError');
@@ -57,7 +57,7 @@ class MediaService {
 
     // Nom unique sécurisé
     const ext = path.extname(nomFichier).toLowerCase() || '';
-    const uniqueName = `${uuidv4()}${ext}`;
+    const uniqueName = `${randomUUID()}${ext}`;
     const cleanDossier = (dossier || '').replace(/^\/+|\/+$/g, '');
     const s3Key = cleanDossier ? `${cleanDossier}/${uniqueName}` : uniqueName;
 
