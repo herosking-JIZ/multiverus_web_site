@@ -9,7 +9,7 @@
   "crons": [
     {
       "path": "/api/v1/cron/cleanup-pending",
-      "schedule": "0 * * * *"
+      "schedule": "0 3 * * *"
     }
   ]
 }
