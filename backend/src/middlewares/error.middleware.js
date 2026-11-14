@@ -33,8 +33,8 @@ const errorHandler = (err, req, res, next) => {
 
     const statusCode = err.statusCode || 500;
 
-    // Erreur opérationnelle (AppError) → message lisible pour le client
-    if (err.isOperational) {
+    // Erreur opérationnelle (AppError) ou 404 → message lisible pour le client
+    if (err.isOperational || statusCode === 404) {
         return res.status(statusCode).json({
             success: false,
             message: err.message,

@@ -7,6 +7,7 @@ const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
 const router = require('./src/routes/route');
 const errorHandler = require('./src/middlewares/error.middleware');
+const AppError = require('./src/utils/appError');
 const { doubleCsrfProtection, generateToken } = require('./src/lib/csrf');
 console.log('FRONTEND_URL', process.env.FRONTEND_URL);
 const app = express();
@@ -141,16 +142,28 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
+// Route d'accueil / racine (évite le 404 lors du test de l'URL de base)
+app.get('/', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'Bienvenue sur l\'API MultiVerus',
+        version: 'v1',
+        endpoints: {
+            csrfToken: 'GET /api/v1/csrf-token',
+            baseApi: '/api/v1'
+        }
+    });
+});
+
 // Protection CSRF globale (après la route publique)
 app.use(doubleCsrfProtection);
 
 // Routes API
 app.use('/api/v1', router);
+
 // Middleware 404 - Route non trouvée
 app.use((req, res, next) => {
-    const error = new Error(`La ressource demandée [${req.originalUrl}] est introuvable.`);
-    error.statusCode = 404;
-    next(error);
+    next(new AppError(`La ressource demandée [${req.originalUrl}] est introuvable. Toutes les routes API sont préfixées par /api/v1.`, 404));
 });
 
 // Gestionnaire d'erreurs global (doit être après toutes les routes)
