@@ -5,7 +5,7 @@ import { setCsrfToken, setAccessToken, logout } from '../store/authSlice'
 const configuredBaseURL = import.meta.env.VITE_API_URL || 'http://100.119.90.39:8080/api/v1';
 const baseURL = configuredBaseURL.startsWith('/') || /^https?:\/\//i.test(configuredBaseURL)
   ? configuredBaseURL
-  : `http://${configuredBaseURL}`;
+  : `https://${configuredBaseURL}`;
 
 const adminApi = axios.create({
   baseURL,
