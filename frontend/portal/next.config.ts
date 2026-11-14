@@ -15,6 +15,17 @@ const nextConfig: NextConfig = {
     dangerouslyAllowLocalIP: true,
     remotePatterns: [
       {
+        protocol: 'https',
+        hostname: 'nmuxagrhupzhcqpeglui.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8080',
+        pathname: '/uploads/**',
+      },
+      {
         protocol: 'http',
         hostname: '10.3.3.222',
         port: '8080',
