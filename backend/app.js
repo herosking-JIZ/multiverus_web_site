@@ -46,7 +46,13 @@ app.use('/uploads', express.static(uploadsDir));
 const configuredFrontendUrls = (process.env.FRONTEND_URL || '')
     .split(',')
     .map(url => url.trim().replace(/\/$/, ''))
-    .filter(Boolean);
+    .filter(Boolean)
+    .flatMap(url => {
+        if (!/^https?:\/\//i.test(url)) {
+            return [`https://${url}`, `http://${url}`, url];
+        }
+        return [url];
+    });
 
 const allowedOrigins = [
     'http://localhost:3000',
@@ -69,8 +75,8 @@ app.use(cors({
         if (process.env.NODE_ENV !== 'production' && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)) {
             return callback(null, true);
         }
-        // Autoriser les déploiements de prévisualisation Vercel (*.vercel.app)
-        if ((process.env.ALLOW_VERCEL_PREVIEWS === 'true' || process.env.NODE_ENV !== 'production') && origin.endsWith('.vercel.app')) {
+        // Autoriser les domaines Vercel (*.vercel.app) pour fluidifier les prévisualisations et le portail
+        if (origin.endsWith('.vercel.app')) {
             return callback(null, true);
         }
         callback(new Error(`Not allowed by CORS: ${origin}`));
