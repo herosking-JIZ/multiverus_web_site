@@ -3,12 +3,20 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+// Pour les migrations et db push, Prisma a besoin d'une connexion en Session Mode (port 5432)
+// plutôt que du pooler transactionnel PgBouncer (port 6543)
+const migrationUrl = process.env["DIRECT_URL"] || (
+  process.env["DATABASE_URL"]?.includes(":6543")
+    ? process.env["DATABASE_URL"].replace(":6543/", ":5432/").replace("?pgbouncer=true", "")
+    : process.env["DATABASE_URL"]
+);
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: migrationUrl,
   },
 });
