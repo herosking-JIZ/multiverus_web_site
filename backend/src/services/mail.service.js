@@ -2,9 +2,9 @@ const transporter = require('../config/mail');
 
 class MailService {
     async sendPasswordResetEmail(email, token) {
-        // En vrai, on utiliserait le domaine du frontend depuis process.env
-        const frontendUrl = process.env.FRONTEND_URL;
-        const resetLink = `${frontendUrl}/reset-password?token=${token}`;
+        // Redirige vers la page de réinitialisation de l'espace administration
+        const adminBaseUrl = (process.env.ADMIN_URL || process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/$/, '');
+        const resetLink = `${adminBaseUrl}/reset-password?token=${token}`;
         console.log('resetLink', resetLink);
         const htmlTemplate = `
     <!DOCTYPE html>

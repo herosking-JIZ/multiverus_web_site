@@ -123,6 +123,17 @@ async function main() {
   // ────────────────────────────────────────────────────────────
   console.log('\n--- ÉTAPE 5 : SÉCURITÉ CORS, HEADERS & COOKIES ---');
 
+  runTest('CORS et application app.js acceptent PORTAL_URL et ADMIN_URL séparés', () => {
+    delete process.env.FRONTEND_URL;
+    process.env.PORTAL_URL = 'https://portal.multiverus.com';
+    process.env.ADMIN_URL = 'https://admin.multiverus.com';
+    delete require.cache[require.resolve('../app')];
+    const app = require('../app');
+    assert.ok(app, 'L\'application doit se charger avec PORTAL_URL et ADMIN_URL configurés séparément');
+    delete process.env.PORTAL_URL;
+    delete process.env.ADMIN_URL;
+  });
+
   runTest('CORS et application app.js se chargent avec les nouvelles règles multi-domaines', () => {
     process.env.FRONTEND_URL = 'https://multiverus.com, https://admin.multiverus.com';
     delete require.cache[require.resolve('../app')];

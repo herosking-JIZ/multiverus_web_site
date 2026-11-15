@@ -13,6 +13,9 @@ class LeadService {
 
     // Notification email (non bloquant)
     setImmediate(() => {
+      const adminBaseUrl = (process.env.ADMIN_URL || process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/$/, '');
+      const leadLink = `${adminBaseUrl}/leads`;
+
       transporter.sendMail({
         from: `"MultiVerus" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
         to: process.env.SMTP_USER,
@@ -28,8 +31,8 @@ class LeadService {
             <tr><td style="padding:8px;font-weight:bold">Date</td><td style="padding:8px">${lead.createdAt.toLocaleString('fr-FR')}</td></tr>
           </table>
           <p style="margin-top:16px">
-            <a href="${process.env.FRONTEND_URL || ''}/admin/leads/${lead.id}">
-              Voir dans l'administration
+            <a href="${leadLink}" style="display:inline-block;padding:10px 18px;background:#004AAD;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:bold">
+              Consulter dans l'administration
             </a>
           </p>
         `,

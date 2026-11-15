@@ -9,7 +9,9 @@ const router = require('./src/routes/route');
 const errorHandler = require('./src/middlewares/error.middleware');
 const AppError = require('./src/utils/appError');
 const { doubleCsrfProtection, generateToken } = require('./src/lib/csrf');
-console.log('FRONTEND_URL', process.env.FRONTEND_URL);
+console.log('PORTAL_URL:', process.env.PORTAL_URL || 'non défini');
+console.log('ADMIN_URL :', process.env.ADMIN_URL || 'non défini');
+if (process.env.FRONTEND_URL) console.log('FRONTEND_URL (legacy):', process.env.FRONTEND_URL);
 const app = express();
 app.set('trust proxy', 1);
 // Prisma retourne parfois des BigInt (count, ordre...) que JSON.stringify ne gère pas nativement
@@ -42,9 +44,21 @@ const uploadsDir = process.env.MEDIA_STORAGE_PATH
     : path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(uploadsDir));
 
-// Configuration CORS avancée (multi-environnements & Serverless)
-const configuredFrontendUrls = (process.env.FRONTEND_URL || '')
-    .split(',')
+// ==========================================
+// CONFIGURATION CORS AVANCÉE (PORTAL & ADMIN)
+// ==========================================
+// Supporte :
+// - PORTAL_URL : URL du portail public (ex: Next.js)
+// - ADMIN_URL  : URL du tableau de bord admin (ex: Vite / React)
+// - FRONTEND_URL : rétrocompatibilité (supporte les listes séparées par des virgules)
+const rawFrontendSources = [
+    process.env.PORTAL_URL,
+    process.env.ADMIN_URL,
+    process.env.FRONTEND_URL,
+].filter(Boolean);
+
+const configuredFrontendUrls = rawFrontendSources
+    .flatMap(item => item.split(','))
     .map(url => url.trim().replace(/\/$/, ''))
     .filter(Boolean)
     .flatMap(url => {
