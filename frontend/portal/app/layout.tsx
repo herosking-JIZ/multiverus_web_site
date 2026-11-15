@@ -1,6 +1,5 @@
 'use client'
 
-import { Inter, JetBrains_Mono } from 'next/font/google'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/queryClient'
 import Navbar from '@/components/layout/Navbar'
@@ -9,20 +8,6 @@ import PageTransition from '@/components/layout/PageTransition'
 import DataPreloader from '@/components/layout/DataPreloader'
 import { useCsrfToken } from '@/hooks/api.hooks'
 import './globals.css'
-
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  display: 'swap',
-})
-
-const jbMono = JetBrains_Mono({
-  variable: '--font-jbmono',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-})
 
 function CsrfInitializer() {
   useCsrfToken()
@@ -34,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="fr"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${jbMono.variable} h-full antialiased`}
+      className="h-full antialiased font-sans"
     >
       <head>
         <title>MULTIVERUS — Studio tech & fintech · Développement & Contenu</title>
@@ -45,6 +30,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta
           name="keywords"
           content="MULTIVERUS, développeur, backend, fintech, architecture, NestJS, React, Burkina Faso"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
