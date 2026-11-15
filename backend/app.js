@@ -123,10 +123,39 @@ app.use(cookieParser(process.env.COOKIE_SECRET || 'secret_de_secours_cookies'));
 
 
 
-// Middleware personnalisé pour voir le contenu des requêtes (Payload)
+// Assainissement des données sensibles pour les logs d'exécution (anti-fuite de mots de passe et jetons)
+const SENSITIVE_LOG_KEYS = new Set([
+    'password',
+    'motdepasse',
+    'mot_de_passe',
+    'confirmmotdepasse',
+    'token',
+    'refreshtoken',
+    'accesstoken',
+    'secret',
+    'authorization',
+]);
+
+function maskSensitiveFields(obj) {
+    if (!obj || typeof obj !== 'object') return obj;
+    if (Array.isArray(obj)) return obj.map(maskSensitiveFields);
+    const masked = {};
+    for (const [key, value] of Object.entries(obj)) {
+        if (SENSITIVE_LOG_KEYS.has(key.toLowerCase())) {
+            masked[key] = '***MASQUÉ/REDACTED***';
+        } else if (value && typeof value === 'object') {
+            masked[key] = maskSensitiveFields(value);
+        } else {
+            masked[key] = value;
+        }
+    }
+    return masked;
+}
+
+// Middleware personnalisé pour voir le contenu des requêtes (Payload assaini)
 app.use((req, res, next) => {
     if (req.body && Object.keys(req.body).length > 0) {
-        console.log('📦 Body:', JSON.stringify(req.body, null, 2));
+        console.log('📦 Body:', JSON.stringify(maskSensitiveFields(req.body), null, 2));
     }
     next();
 });

@@ -28,13 +28,13 @@ class AuthService {
         // 2. Hasher le mot de passe
         const hashedPassword = await hashPassword(password);
 
-        // 3. Créer l'utilisateur (rôle LECTEUR par défaut)
+        // 3. Créer l'utilisateur (rôle LECTEUR par défaut, jamais ADMIN arbitrairement)
         const user = await prisma.utilisateur.create({
             data: {
                 nomComplet,
                 email,
                 motDePasse: hashedPassword,
-                role: 'ADMIN',
+                role: 'LECTEUR',
                 actif: true
             }
         });
@@ -122,7 +122,9 @@ class AuthService {
     async refreshToken(token) {
         try {
             // Verify token validity based on JWT signature and expiration
-            const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET || 'secret_refresh_temporaire');
+            const refreshSecret = process.env.JWT_REFRESH_SECRET || (process.env.NODE_ENV === 'production' ? null : 'secret_refresh_temporaire');
+            if (!refreshSecret) throw new Error('JWT_REFRESH_SECRET manquant en production');
+            const decoded = jwt.verify(token, refreshSecret);
 
             const user = await prisma.utilisateur.findUnique({ where: { id: decoded.id } });
 

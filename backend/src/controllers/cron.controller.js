@@ -7,9 +7,17 @@ class CronController {
    */
   async cleanupPendingUploads(req, res, next) {
     try {
-      // Sécurité : si un CRON_SECRET est défini dans l'environnement, on valide l'en-tête
+      // Sécurité : validation stricte du jeton CRON_SECRET
       const cronSecret = process.env.CRON_SECRET;
       const authHeader = req.headers['authorization'];
+      const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+
+      if (isProd && !cronSecret) {
+        return res.status(500).json({
+          success: false,
+          message: 'CRON_SECRET non configuré sur le serveur en production.',
+        });
+      }
 
       if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
         return res.status(401).json({

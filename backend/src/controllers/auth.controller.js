@@ -39,6 +39,15 @@ const logAction = async (req, userId, action, cible, detail) => {
 class AuthController {
     async register(req, res, next) {
         try {
+            // SÉCURITÉ : L'inscription publique est fermée par défaut pour empêcher la création arbitraire de comptes admin.
+            // Seuls les administrateurs connectés via POST /api/v1/users ou la CLI peuvent créer des comptes.
+            if (process.env.ENABLE_PUBLIC_REGISTRATION !== 'true') {
+                return res.status(403).json({
+                    success: false,
+                    message: "L'inscription publique est désactivée pour des raisons de sécurité. Contactez un administrateur."
+                });
+            }
+
             const { nomComplet, email, password } = req.body;
 
             const user = await authService.register({ nomComplet, email, password });

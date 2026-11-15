@@ -6,9 +6,11 @@ const jwt = require('jsonwebtoken');
  * @returns {string}
  */
 const generateAccessToken = (user) => {
+    const secret = process.env.JWT_ACCESS_SECRET || (process.env.NODE_ENV === 'production' ? null : 'secret_access_temporaire');
+    if (!secret) throw new Error('JWT_ACCESS_SECRET manquant en production');
     return jwt.sign(
         { id: user.id, role: user.role, email: user.email },
-        process.env.JWT_ACCESS_SECRET || 'secret_access_temporaire',
+        secret,
         { expiresIn: '1d' }
     );
 };
@@ -19,10 +21,12 @@ const generateAccessToken = (user) => {
  * @returns {string}
  */
 const generateRefreshToken = (user) => {
+    const secret = process.env.JWT_REFRESH_SECRET || (process.env.NODE_ENV === 'production' ? null : 'secret_refresh_temporaire');
+    if (!secret) throw new Error('JWT_REFRESH_SECRET manquant en production');
     return jwt.sign(
         { id: user.id },
-        process.env.JWT_REFRESH_SECRET || 'secret_refresh_temporaire',
-        { expiresIn: '1d' }
+        secret,
+        { expiresIn: '7d' }
     );
 };
 

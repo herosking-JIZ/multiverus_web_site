@@ -13,7 +13,13 @@ const verifyToken = (req, res, next) => {
     const token = authHeader.split(' ')[1];
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET || 'secret_access_temporaire');
+        const jwtSecret = process.env.JWT_ACCESS_SECRET || (process.env.NODE_ENV === 'production' ? null : 'secret_access_temporaire');
+        if (!jwtSecret) {
+            console.error('❌ [SÉCURITÉ CRITIQUE] JWT_ACCESS_SECRET n\'est pas défini dans l\'environnement de production.');
+            return res.status(500).json({ success: false, message: 'Erreur de configuration de sécurité du serveur' });
+        }
+
+        const decoded = jwt.verify(token, jwtSecret);
         
         // On injecte les données décodées (ex: { id, role, email }) dans l'objet req
         req.user = decoded; 
