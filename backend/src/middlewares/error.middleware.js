@@ -31,10 +31,18 @@ const errorHandler = (err, req, res, next) => {
         });
     }
 
-    const statusCode = err.statusCode || 500;
+    const statusCode = err.statusCode || err.status || 500;
 
-    // Erreur opérationnelle (AppError) ou 404 → message lisible pour le client
-    if (err.isOperational || statusCode === 404) {
+    // Erreur taille de payload trop volumineuse (body-parser / 413)
+    if (err.type === 'entity.too.large' || statusCode === 413) {
+        return res.status(413).json({
+            success: false,
+            message: 'La taille de la requête dépasse la limite autorisée (10 Ko).',
+        });
+    }
+
+    // Erreur opérationnelle (AppError) ou erreur client (4xx) → message lisible pour le client
+    if (err.isOperational || (statusCode >= 400 && statusCode < 500)) {
         return res.status(statusCode).json({
             success: false,
             message: err.message,

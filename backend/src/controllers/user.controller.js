@@ -19,13 +19,26 @@ const logAdminAction = async (req, action, cibleId, detail) => {
 
 class UserController {
     async getUserById(req, res, next) {
-
         try {
             const { id } = req.params;
+
+            // Protection anti-IDOR : seul l'administrateur ou l'utilisateur concerné lui-même peut accéder à ce profil
+            if (req.user && req.user.role !== 'ADMIN' && req.user.id !== id) {
+                return res.status(403).json({
+                    success: false,
+                    message: "Accès refusé : vous n'êtes pas autorisé à consulter le profil d'un autre utilisateur.",
+                });
+            }
+
             const user = await prisma.utilisateur.findUnique({
                 where: { id },
                 select: { id: true, nomComplet: true, email: true, role: true, actif: true, lastLogin: true, createdAt: true }
             });
+
+            if (!user) {
+                return res.status(404).json({ success: false, message: 'Utilisateur introuvable' });
+            }
+
             return res.status(200).json({ success: true, data: user });
         } catch (error) { next(error); }
     }
