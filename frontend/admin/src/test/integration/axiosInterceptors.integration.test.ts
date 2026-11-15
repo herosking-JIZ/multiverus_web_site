@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
 import { store } from '../../store';
-import { setCredentials, logout } from '../../store/authSlice';
+import { logout } from '../../store/authSlice';
 import adminApi, { clearCsrfCache } from '../../lib/axios';
 
 vi.mock('axios', async () => {
