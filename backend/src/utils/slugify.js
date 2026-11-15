@@ -9,7 +9,7 @@ const slugify = (text) => {
     .trim()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '') // supprime les accents
-    .replace(/[^a-z0-9\s-]/g, '')    // garde alphanumérique, espaces, tirets
+    .replace(/[^a-z0-9\s_-]/g, '')   // garde alphanumérique, espaces, tirets et underscores
     .replace(/[\s_]+/g, '-')          // espaces/underscores → tirets
     .replace(/-+/g, '-')              // tirets multiples → un seul
     .replace(/^-|-$/g, '');           // supprime tirets en début/fin
