@@ -17,6 +17,17 @@ const cronRoutes = require('./cron.routes');
 
 const router = express.Router();
 
+// Route d'accueil API (évite les 404 sur GET /api/v1)
+router.get('/', (req, res) => {
+  res.json({
+    success: true,
+    name: 'MultiVerus API',
+    version: '1.0.0',
+    status: 'running',
+    health: '/api/v1/health'
+  });
+});
+
 // ===================================================================
 // MODULES EXISTANTS
 // ===================================================================

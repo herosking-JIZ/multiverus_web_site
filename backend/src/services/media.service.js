@@ -135,7 +135,7 @@ class MediaService {
 
   /**
    * Upload direct côté serveur (Multer).
-   * Supporte S3/R2 si configuré, avec fallback automatique vers le stockage disque local.
+   * Supporte S3/R2/Supabase si configuré, avec fallback automatique vers le stockage disque local.
    */
   async upload(file, userId, dossier = '') {
     const maxSize = MIME_LIMITS[file.mimetype];
@@ -145,16 +145,24 @@ class MediaService {
     }
 
     const cleanDossier = (dossier || '').replace(/^\/+|\/+$/g, '');
-    const relativePath = cleanDossier ? `${cleanDossier}/${file.filename}` : file.filename;
+    const ext = path.extname(file.originalname).toLowerCase();
+    const uniqueFileName = file.filename || `${randomUUID()}${ext}`;
+    const relativePath = cleanDossier ? `${cleanDossier}/${uniqueFileName}` : uniqueFileName;
 
     let s3Bucket = 'local';
     let s3Region = 'local';
     let url = `${BASE_URL}/uploads/${relativePath}`;
     let cdnUrl = url;
 
-    // Si S3/R2 est configuré, on transfère le fichier vers le stockage Cloud
+    // Récupérer le buffer du fichier (depuis memoryStorage ou diskStorage)
+    const fileBuffer = file.buffer || (file.path ? fs.readFileSync(file.path) : null);
+    if (!fileBuffer) {
+      throw new AppError('Contenu du fichier introuvable.', 400);
+    }
+
+    // Si S3/R2/Supabase est configuré, on transfère le buffer directement vers le bucket
     if (storage.isConfigured()) {
-      const fileBuffer = fs.readFileSync(file.path);
+      console.log(`[MediaService] Transfert du buffer vers Supabase S3 (${relativePath})...`);
       const uploadResult = await storage.uploadBuffer({
         key: relativePath,
         buffer: fileBuffer,
@@ -166,11 +174,30 @@ class MediaService {
       url = uploadResult.publicUrl;
       cdnUrl = uploadResult.publicUrl;
 
-      // Supprimer le fichier temporaire local après envoi vers S3
+      // Supprimer le fichier temporaire local si diskStorage avait été utilisé
+      if (file.path) {
+        try {
+          fs.unlinkSync(file.path);
+        } catch {
+          /* ignore */
+        }
+      }
+    } else {
+      // Fallback stockage disque local si S3 n'est pas configuré
+      console.warn('[MediaService] S3 non configuré. Écriture sur le disque local...');
+      const destDir = cleanDossier ? path.join(STORAGE_PATH, cleanDossier) : STORAGE_PATH;
       try {
-        fs.unlinkSync(file.path);
-      } catch {
-        /* ignore */
+        fs.mkdirSync(destDir, { recursive: true });
+        const localFilePath = path.join(destDir, uniqueFileName);
+        if (file.buffer) {
+          fs.writeFileSync(localFilePath, file.buffer);
+        }
+      } catch (err) {
+        console.error('[MediaService] Erreur écriture disque local :', err.message);
+        throw new AppError(
+          "Impossible de stocker le fichier en local (système de fichiers restreint). Veuillez configurer le stockage Supabase / S3 (S3_BUCKET_NAME, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY) dans Vercel.",
+          500
+        );
       }
     }
 
