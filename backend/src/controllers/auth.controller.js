@@ -3,7 +3,10 @@ const prisma = require('../lib/prisma');
 
 const getRefreshTokenCookieOptions = () => {
     const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1' || !!process.env.VERCEL_ENV;
-    const sameSite = process.env.COOKIE_SAMESITE || (isProd ? 'None' : 'Lax');
+    const rawSameSite = process.env.COOKIE_SAMESITE;
+    const sameSite = (isProd && !process.env.COOKIE_DOMAIN)
+        ? 'None'
+        : (rawSameSite || (isProd ? 'None' : 'Lax'));
     const secure = sameSite === 'None' || isProd || process.env.COOKIE_SECURE === 'true';
 
     return {

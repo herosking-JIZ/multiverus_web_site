@@ -1,7 +1,12 @@
 const { doubleCsrf } = require('csrf-csrf');
 
 const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1' || !!process.env.VERCEL_ENV;
-const sameSiteSetting = process.env.COOKIE_SAMESITE || (isProd ? 'None' : 'Lax');
+// En production cross-domaine (ex: Vercel *.vercel.app) sans COOKIE_DOMAIN partagé, SameSite DOIT être 'None'
+// pour que le navigateur transmette les cookies aux requêtes AJAX cross-origin du portail et de l'admin.
+const rawSameSite = process.env.COOKIE_SAMESITE;
+const sameSiteSetting = (isProd && !process.env.COOKIE_DOMAIN)
+    ? 'None'
+    : (rawSameSite || (isProd ? 'None' : 'Lax'));
 // En HTTPS avec SameSite=None, Secure doit obligatoirement être true
 const secureSetting = sameSiteSetting === 'None' || isProd || process.env.COOKIE_SECURE === 'true';
 
