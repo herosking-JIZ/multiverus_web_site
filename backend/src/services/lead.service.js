@@ -15,19 +15,24 @@ class LeadService {
     // sinon Vercel gèle le conteneur dès que la réponse HTTP est envoyée et l'email n'est jamais transmis.
     const adminBaseUrl = (process.env.ADMIN_URL || process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/$/, '');
     const leadLink = `${adminBaseUrl}/leads`;
-    const toEmail = process.env.CONTACT_RECEIVER_EMAIL || process.env.ADMIN_EMAIL || process.env.SMTP_USER;
 
-    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+    // Supporte une liste d'emails séparés par des virgules (ex: "admin1@domaine.com, admin2@domaine.com")
+    const rawReceivers = process.env.CONTACT_RECEIVER_EMAILS || process.env.CONTACT_RECEIVER_EMAIL || process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+    const recipientList = rawReceivers
+      ? rawReceivers.split(',').map((email) => email.trim()).filter(Boolean)
+      : (process.env.SMTP_USER ? [process.env.SMTP_USER] : []);
+
+    if (process.env.SMTP_USER && process.env.SMTP_PASS && recipientList.length > 0) {
       try {
-        console.log(`[Lead] Envoi de l'email de notification vers ${toEmail}...`);
+        console.log(`[Lead] Envoi de l'email de notification vers : ${recipientList.join(', ')}...`);
         const fromAddress = process.env.SMTP_FROM && process.env.SMTP_FROM.includes('@')
           ? process.env.SMTP_FROM
           : `"MultiVerus" <${process.env.SMTP_USER}>`;
 
-        // 1. Notification pour l'administrateur / équipe
+        // 1. Notification pour l'administrateur / équipe (envoyée à l'ensemble des destinataires)
         const info = await transporter.sendMail({
           from: fromAddress,
-          to: toEmail,
+          to: recipientList.join(', '),
           replyTo: lead.email,
           subject: `[Nouveau lead - Discutons] ${lead.sujet} (${lead.nomComplet})`,
           html: `

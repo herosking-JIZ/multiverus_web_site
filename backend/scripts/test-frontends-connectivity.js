@@ -207,6 +207,29 @@ async function main() {
     assert.ok(content.includes("multiverus-web-site.vercel.app"), 'next.config.ts doit autoriser multiverus-web-site.vercel.app');
   });
 
+  // ────────────────────────────────────────────────────────────
+  // TEST 5 : GESTION DES LISTES D'EMAILS DESTINATAIRES
+  // ────────────────────────────────────────────────────────────
+  console.log('\n--- TEST 5 : PARSING DES DESTINATAIRES CONTACT_RECEIVER_EMAILS ---');
+
+  runTest('Supporte une liste d\'emails séparés par des virgules et nettoie les espaces', () => {
+    const rawInput = "contact@multiverus.com,  direction@multiverus.com,tech@multiverus.com ";
+    const parsed = rawInput.split(',').map(e => e.trim()).filter(Boolean);
+    assert.deepStrictEqual(parsed, [
+      'contact@multiverus.com',
+      'direction@multiverus.com',
+      'tech@multiverus.com'
+    ]);
+    assert.strictEqual(parsed.join(', '), 'contact@multiverus.com, direction@multiverus.com, tech@multiverus.com');
+  });
+
+  runTest('Repli sur SMTP_USER si aucun destinataire spécifique n\'est fourni', () => {
+    const rawInput = undefined;
+    const smtpUser = "fallback@multiverus.com";
+    const parsed = rawInput ? rawInput.split(',').map(e => e.trim()).filter(Boolean) : [smtpUser];
+    assert.deepStrictEqual(parsed, ['fallback@multiverus.com']);
+  });
+
   console.log('\n================================================================');
   console.log(`📊 RÉSULTAT : ${passedTests}/${totalTests} tests réussis`);
   console.log('================================================================\n');
