@@ -41,8 +41,7 @@ export default function ServicesPage() {
 
           if (apiImage && typeof apiImage === 'string') {
             apiImage = apiImage
-              .replace('10.3.3.49', '100.119.90.39')
-              .replace('10.3.3.50', '100.119.90.39')
+              .replace(/https?:\/\/(10\.3\.3\.(49|50)|100\.119\.90\.39)(:\d+)?/g, 'https://multiverus-web-site.vercel.app')
           }
 
           const fallbackImage = SERVICES_FALLBACK.find(s => s.slug === service.slug)?.backgroundImage ||

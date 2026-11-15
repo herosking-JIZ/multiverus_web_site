@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
         pathname: '/storage/v1/object/public/**',
       },
       {
+        protocol: 'https',
+        hostname: 'multiverus-web-site.vercel.app',
+        pathname: '/uploads/**',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '8080',

@@ -1,7 +1,12 @@
 import axios from 'axios'
 
+const configuredBaseURL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api/v1' : 'https://multiverus-web-site.vercel.app/api/v1');
+const baseURL = configuredBaseURL.startsWith('/') || /^https?:\/\//i.test(configuredBaseURL)
+  ? configuredBaseURL
+  : `https://${configuredBaseURL}`;
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api/v1',
+  baseURL,
   timeout: 10_000,
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,

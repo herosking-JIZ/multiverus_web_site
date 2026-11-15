@@ -1,6 +1,6 @@
 const { doubleCsrf } = require('csrf-csrf');
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1' || !!process.env.VERCEL_ENV;
 const sameSiteSetting = process.env.COOKIE_SAMESITE || (isProd ? 'None' : 'Lax');
 // En HTTPS avec SameSite=None, Secure doit obligatoirement être true
 const secureSetting = sameSiteSetting === 'None' || isProd || process.env.COOKIE_SECURE === 'true';

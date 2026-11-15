@@ -1,18 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { appendFileSync } from 'fs'
+
+const getTargetBase = () => {
+  const envUrl = process.env.BACKEND_API_URL || process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api/v1' : 'https://multiverus-web-site.vercel.app/api/v1');
+  return envUrl.replace(/\/+$/, '');
+};
 
 async function proxyRequest(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params
   const searchParams = request.nextUrl.searchParams.toString()
-  const apiUrl = `http://100.119.90.39:8080/api/v1/${path.join('/')}${searchParams ? `?${searchParams}` : ''}`
-
-  const logMsg = `[${new Date().toISOString()}] ${request.method} ${request.nextUrl.pathname} -> ${apiUrl}\n`
-  try {
-    appendFileSync('/tmp/proxy.log', logMsg)
-  } catch (e) { }
+  const targetBase = getTargetBase()
+  const apiUrl = `${targetBase}/${path.join('/')}${searchParams ? `?${searchParams}` : ''}`
 
   const headers = new Headers(request.headers)
-  headers.set('host', '100.119.90.39:8080')
+  headers.delete('host')
 
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), 15000) // 15s timeout
@@ -52,7 +52,6 @@ async function proxyRequest(request: NextRequest, { params }: { params: Promise<
     clearTimeout(timeoutId)
     const errorMsg = `[API Proxy Error] ${new Date().toISOString()} ${request.method} ${request.nextUrl.pathname}: ${error.message}\n`
     console.error(errorMsg, error)
-    try { appendFileSync('/tmp/proxy.log', errorMsg) } catch (e) { }
     return NextResponse.json({
       error: 'Proxy implementation error',
       message: error.name === 'AbortError' ? 'Request timeout' : error.message
